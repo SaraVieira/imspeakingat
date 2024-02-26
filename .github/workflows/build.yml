@@ -8,7 +8,7 @@ jobs:
       NEXTAUTH_SECRET: supersecret
       DISCORD_CLIENT_ID: test
       DISCORD_CLIENT_SECRET: test
-      NEXTAUTH_URL: test
+      NEXTAUTH_URL: http://localhost:3000
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
