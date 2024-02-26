@@ -8,6 +8,13 @@ on:
 
 jobs:
   lint:
+    env:
+      DATABASE_URL: postgresql://postgres:@localhost:5432/trpcdb
+      NODE_ENV: test
+      NEXTAUTH_SECRET: supersecret
+      DISCORD_CLIENT_ID: test
+      DISCORD_CLIENT_SECRET: test
+      NEXTAUTH_URL: test
     runs-on: ubuntu-latest
 
     strategy:
