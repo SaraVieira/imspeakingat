@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { accountFormSchemaInside } from "~/components/userSettings/schema";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
@@ -15,11 +16,47 @@ export const userRouter = createTRPCRouter({
         },
       });
     }),
+  get: protectedProcedure.query(async ({ ctx }) => {
+    const user = await ctx.db.user.findUnique({
+      where: {
+        id: ctx.session.user.id,
+      },
+    });
 
-  //   getLatest: protectedProcedure.query(({ ctx }) => {
-  //     return ctx.db.engament.findFirst({
-  //       orderBy: { createdAt: "desc" },
-  //       where: { createdBy: { id: ctx.session.user.id } },
-  //     });
-  //   }),
+    return user;
+  }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        ...accountFormSchemaInside,
+        location: z
+          .object({
+            code: z.string(),
+            name: z.string(),
+          })
+          .optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: {
+          ...(input.username && { username: input.username }),
+          ...(input.bio && { bio: input.bio }),
+          ...(input.website && { website: input.website }),
+          ...(input.x && { x: input.x }),
+          ...(input.mastodon && { mastodon: input.mastodon }),
+          ...(input.github && { github: input.github }),
+          ...(input.linkedin && { linkedin: input.linkedin }),
+          ...(input.threads && { threads: input.threads }),
+          ...(input.location?.code &&
+            input.location.name && {
+              locationCode: input.location.code,
+              locationName: input.location.name,
+            }),
+        },
+      });
+    }),
 });
