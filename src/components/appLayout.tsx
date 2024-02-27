@@ -3,7 +3,7 @@ import { UserNav } from "./usermenu";
 
 export const AppLayout = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <div className="flex flex-col border-b px-4">
         <div className="container m-auto flex h-16 items-center ">
           <MainNav className="mx-6" />
@@ -12,7 +12,9 @@ export const AppLayout = ({ children }: { children?: React.ReactNode }) => {
           </div>
         </div>
       </div>
-      <div className="container mx-auto mt-12 flex flex-col">{children}</div>
-    </>
+      <main className="container mx-auto mt-12 flex h-full grow flex-col">
+        {children}
+      </main>
+    </div>
   );
 };
