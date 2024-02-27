@@ -1,3 +1,4 @@
+import { EngamentType } from "@prisma/client";
 import { z } from "zod";
 
 import {
@@ -15,28 +16,71 @@ export const engamentRouter = createTRPCRouter({
       };
     }),
 
-  //   create: protectedProcedure
-  //     .input(z.object({ name: z.string().min(1) }))
-  //     .mutation(async ({ ctx, input }) => {
-  //       // simulate a slow db call
-  //       await new Promise((resolve) => setTimeout(resolve, 1000));
+  create: protectedProcedure
+    .input(
+      z.object({
+        type: z.enum([
+          EngamentType.MC,
+          EngamentType.OTHER,
+          EngamentType.PANEL,
+          EngamentType.TALK,
+        ]),
+        date: z.object({
+          from: z.date(),
+          to: z.date().optional(),
+        }),
+        location: z.any(),
+        confName: z.string(),
+        talkTitle: z.string().optional(),
+        confId: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!input.confId) {
+        const { id } = await ctx.db.conference.create({
+          data: {
+            location: input.location,
+            name: input.confName,
+            dateStart: input.date.from,
+            dateEnd: input.date.to,
+          },
+        });
+        return ctx.db.engament.create({
+          data: {
+            talk: input.talkTitle || "",
+            type: input.type,
+            createdById: ctx.session.user.id,
+            conferenceId: id,
+          },
+          include: {
+            Conference: true,
+          },
+        });
+      }
+      return ctx.db.engament.create({
+        data: {
+          talk: input.talkTitle || "",
+          type: input.type,
+          createdById: ctx.session.user.id,
+          conferenceId: input.confId,
+        },
+        include: {
+          Conference: true,
+        },
+      });
+    }),
 
-  //       return ctx.db.engament.create({
-  //         data: {
-  //           name: input.name,
-  //           createdBy: { connect: { id: ctx.session.user.id } },
-  //         },
-  //       });
-  //     }),
-
-  //   getLatest: protectedProcedure.query(({ ctx }) => {
-  //     return ctx.db.engament.findFirst({
-  //       orderBy: { createdAt: "desc" },
-  //       where: { createdBy: { id: ctx.session.user.id } },
-  //     });
-  //   }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
+  getAll: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.engament.findMany({
+      orderBy: {
+        Conference: {
+          dateStart: "desc",
+        },
+      },
+      where: { createdBy: { id: ctx.session.user.id } },
+      include: {
+        Conference: true,
+      },
+    });
   }),
 });

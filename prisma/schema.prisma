@@ -18,6 +18,7 @@ enum EngamentType {
     TALK
     MC
     PANEL
+    OTHER
 }
 
 model Engament {
@@ -33,15 +34,23 @@ model Engament {
 }
 
 model Conference {
-    id        String     @id @default(uuid())
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
-    dateStart DateTime
-    dateEnd   DateTime
-    location  String
-    engaments Engament[]
-    name      String
-    image     String?
+    id          String     @id @default(uuid())
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
+    dateStart   DateTime
+    dateEnd     DateTime?
+    location    Json
+    description String?
+    engaments   Engament[]
+    name        String
+    image       String?
+    links       Json?
+    website     String?
+}
+
+enum UserType {
+    USER
+    ADMIN
 }
 
 model User {
@@ -53,6 +62,7 @@ model User {
     email         String?    @unique
     emailVerified DateTime?
     image         String?
+    userType      UserType   @default(USER)
     accounts      Account[]
     sessions      Session[]
     engaments     Engament[]
