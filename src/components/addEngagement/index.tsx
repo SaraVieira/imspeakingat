@@ -49,18 +49,14 @@ export const AddEngagementForm = ({
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="TALK" id="TALK" />
-                    <Label htmlFor="TALK">Talk</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="MC" id="MC" />
-                    <Label htmlFor="MC">MC</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="PANEL" id="PANEL" />
-                    <Label htmlFor="PANEL">Panel</Label>
-                  </div>
+                  {Object.keys(EngamentType).map((e) => (
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value={e} id={e} />
+                      <Label htmlFor={e} className="capitalize">
+                        {e.toLocaleLowerCase()}
+                      </Label>
+                    </div>
+                  ))}
                 </RadioGroup>
               </FormControl>
               <FormMessage />
@@ -90,6 +86,19 @@ export const AddEngagementForm = ({
               <FormLabel>Conference name</FormLabel>
               <FormControl>
                 <Input placeholder="Conference name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confWebsite"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Conference website</FormLabel>
+              <FormControl>
+                <Input type="url" placeholder="www.example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

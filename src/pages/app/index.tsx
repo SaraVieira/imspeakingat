@@ -1,3 +1,5 @@
+import ReactCountryFlag from "react-country-flag";
+import { JsonObject } from "@prisma/client/runtime/library";
 import { useState } from "react";
 import { AddEngagementForm } from "~/components/addEngagement";
 import { AccountFormValues } from "~/components/addEngagement/schema";
@@ -17,11 +19,18 @@ import {
 } from "~/components/ui/sheet";
 import { toast } from "~/components/ui/use-toast";
 import { api } from "~/utils/api";
+import {
+  differenceInDays,
+  format,
+  formatDistanceToNow,
+  formatDistanceToNowStrict,
+} from "date-fns";
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import { ConferenceCard } from "~/components/conference";
 
 const AppPage = () => {
   const [open, setOpen] = useState(false);
-  const { data } = api.engament.getAll.useQuery();
-  console.log(data);
+  const { data, refetch } = api.engament.getAll.useQuery();
   const addEngagement = api.engament.create.useMutation({
     onSuccess: () => {
       toast({
@@ -38,6 +47,7 @@ const AppPage = () => {
       ...data,
       location: placeData,
     });
+    refetch();
   }
   return (
     <AppLayout>
@@ -56,10 +66,31 @@ const AppPage = () => {
           </SheetContent>
         </Sheet>
       </div>
-      <div>
-        <h1>Sup</h1>
-        {data?.map((e) => JSON.stringify(e, null, 2))}
-      </div>
+      {data && (
+        <>
+          <div>
+            <h1 className="mb-8 text-xl font-bold">
+              Your next conference is in{" "}
+              {differenceInDays(
+                data.future[0]?.Conference?.dateStart as Date,
+                new Date(),
+              )}{" "}
+              days
+            </h1>
+            <div className="flex flex-col gap-4">
+              {data?.future?.map((e) => <ConferenceCard {...e} />)}
+            </div>
+          </div>
+          <div>
+            <h1 className="my-8 text-xl font-bold text-muted-foreground">
+              Past Conferences
+            </h1>
+            <div className="flex flex-col gap-4">
+              {data?.past?.map((e) => <ConferenceCard {...e} past />)}
+            </div>
+          </div>
+        </>
+      )}
     </AppLayout>
   );
 };

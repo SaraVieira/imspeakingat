@@ -40,6 +40,7 @@ export const accountFormSchema = z.object({
     required_error: "A conference name is required.",
   }),
   talkTitle: z.string().optional(),
+  confWebsite: z.string().optional(),
 });
 
 export type AccountFormValues = z.infer<typeof accountFormSchema>;

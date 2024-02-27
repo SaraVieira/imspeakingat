@@ -1,4 +1,5 @@
-import { EngamentType } from "@prisma/client";
+import { Conference, Engament, EngamentType } from "@prisma/client";
+import { isPast } from "date-fns";
 import { z } from "zod";
 
 import {
@@ -6,6 +7,8 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+
+type ReturnType = Engament & { Conference: Conference };
 
 export const engamentRouter = createTRPCRouter({
   hello: publicProcedure
@@ -33,6 +36,7 @@ export const engamentRouter = createTRPCRouter({
         confName: z.string(),
         talkTitle: z.string().optional(),
         confId: z.string().optional(),
+        confWebsite: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -43,6 +47,7 @@ export const engamentRouter = createTRPCRouter({
             name: input.confName,
             dateStart: input.date.from,
             dateEnd: input.date.to,
+            website: input.confWebsite,
           },
         });
         return ctx.db.engament.create({
@@ -70,11 +75,11 @@ export const engamentRouter = createTRPCRouter({
       });
     }),
 
-  getAll: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.engament.findMany({
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    const all = await ctx.db.engament.findMany({
       orderBy: {
         Conference: {
-          dateStart: "desc",
+          dateStart: "asc",
         },
       },
       where: { createdBy: { id: ctx.session.user.id } },
@@ -82,5 +87,18 @@ export const engamentRouter = createTRPCRouter({
         Conference: true,
       },
     });
+    const separated = all.reduce(
+      (acc: any, curr: any) => {
+        if (isPast(curr.Conference?.dateStart as Date)) {
+          acc.past = [...acc.past, curr];
+        } else {
+          acc.future = [...acc.future, curr];
+        }
+
+        return acc;
+      },
+      { past: [], future: [] },
+    ) as unknown as { past: ReturnType[]; future: ReturnType[] };
+    return separated;
   }),
 });
