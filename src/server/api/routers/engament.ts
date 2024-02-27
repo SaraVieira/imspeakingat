@@ -1,4 +1,4 @@
-import { Conference, Engament, EngamentType } from "@prisma/client";
+import { type Conference, type Engament, EngamentType } from "@prisma/client";
 import { isPast } from "date-fns";
 import { z } from "zod";
 
@@ -52,7 +52,7 @@ export const engamentRouter = createTRPCRouter({
         });
         return ctx.db.engament.create({
           data: {
-            talk: input.talkTitle || "",
+            talk: input.talkTitle ?? "",
             type: input.type,
             createdById: ctx.session.user.id,
             conferenceId: id,
@@ -64,7 +64,7 @@ export const engamentRouter = createTRPCRouter({
       }
       return ctx.db.engament.create({
         data: {
-          talk: input.talkTitle || "",
+          talk: input.talkTitle ?? "",
           type: input.type,
           createdById: ctx.session.user.id,
           conferenceId: input.confId,

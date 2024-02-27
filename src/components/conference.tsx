@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { Card, CardHeader } from "./ui/card";
 import ReactCountryFlag from "react-country-flag";
-import { Conference, EngamentType } from "@prisma/client";
+import { type Conference, type EngamentType } from "@prisma/client";
 import { cn } from "~/lib/utils";
 
 type ConferenceCardProps = {
@@ -47,10 +47,10 @@ export const ConferenceCard = ({
 
         <p className="!mt-0 flex items-center gap-2 text-muted-foreground">
           <ReactCountryFlag countryCode={country.shortText} svg />
-          {format(new Date(Conference?.dateStart as Date), "dd MMMM yyyy")}{" "}
+          {format(new Date(Conference?.dateStart), "dd MMMM yyyy")}{" "}
           {Conference?.dateEnd && (
             <>
-              - {format(new Date(Conference?.dateEnd as Date), "dd MMMM yyyy")}
+              - {format(new Date(Conference?.dateEnd), "dd MMMM yyyy")}
             </>
           )}
         </p>

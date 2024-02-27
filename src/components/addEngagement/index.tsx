@@ -13,7 +13,7 @@ import { Input } from "../ui/input";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { DatePicker } from "../datePicker";
 import { Button } from "../ui/button";
-import { AccountFormValues, accountFormSchema } from "./schema";
+import { type AccountFormValues, accountFormSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { EngamentType } from "@prisma/client";
@@ -50,7 +50,7 @@ export const AddEngagementForm = ({
                   defaultValue={field.value}
                 >
                   {Object.keys(EngamentType).map((e) => (
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2" key={e}>
                       <RadioGroupItem value={e} id={e} />
                       <Label htmlFor={e} className="capitalize">
                         {e.toLocaleLowerCase()}

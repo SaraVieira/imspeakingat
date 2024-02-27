@@ -10,11 +10,10 @@ import {
   Form,
 } from "../ui/form";
 import { Textarea } from "../ui/textarea";
-import { useSession } from "next-auth/react";
-import { AccountFormValues, accountFormSchema } from "./schema";
+import { type AccountFormValues, accountFormSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "../ui/use-toast";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button } from "../ui/button";
 import { countries } from "~/lib/countries";
 import {
@@ -58,8 +57,8 @@ export const SettingsForm = () => {
     await updateUser.mutateAsync({
       ...data,
       location: {
-        code: data.location || "",
-        name: countries.find((c) => c.code === data.location)?.name || "",
+        code: data.location ?? "",
+        name: countries.find((c) => c.code === data.location)?.name ?? "",
       },
     });
   }
@@ -120,7 +119,9 @@ export const SettingsForm = () => {
                           <SelectGroup>
                             <SelectLabel>Countries</SelectLabel>
                             {countries.map((c) => (
-                              <SelectItem value={c.code}>{c.name}</SelectItem>
+                              <SelectItem key={c.code} value={c.code}>
+                                {c.name}
+                              </SelectItem>
                             ))}
                           </SelectGroup>
                         </SelectContent>
