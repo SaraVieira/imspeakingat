@@ -58,7 +58,7 @@ const AppPage = () => {
         </Sheet>
       </div>
       {data && (
-        <Tabs defaultValue="calendar" className="w-full">
+        <Tabs defaultValue="list" className="w-full">
           <TabsList className="mt-8 grid w-full grid-cols-2">
             <TabsTrigger value="list">List</TabsTrigger>
             <TabsTrigger value="calendar">Calendar</TabsTrigger>

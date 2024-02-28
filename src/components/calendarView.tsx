@@ -5,12 +5,12 @@ import { type ReturnType } from "~/server/api/routers/engament";
 
 export const CalendarView = ({ events }: { events: ReturnType[] }) => {
   const calendarEvents = events.map((e) => ({
-    title: e.Conference.name,
+    title: e.Conference?.name,
     allDay: true,
-    ...(e.Conference.dateEnd
-      ? { start: e.Conference.dateStart, end: e.Conference.dateEnd }
-      : { date: e.Conference.dateStart }),
-    ...(e.Conference.website && { url: e.Conference.website }),
+    ...(e.Conference?.dateEnd
+      ? { start: e.Conference?.dateStart, end: e.Conference.dateEnd }
+      : { date: e.Conference?.dateStart }),
+    ...(e.Conference?.website && { url: e.Conference.website }),
   }));
   return (
     <FullCalendar
