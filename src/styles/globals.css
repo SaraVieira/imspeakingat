@@ -38,6 +38,11 @@ body,
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+    --fc-border-color: hsl(var(--border));
+    --fc-today-bg-color: hsl(var(--accent));
+    --fc-event-bg-color: hsl(var(--accent));
+    --fc-event-border-color: hsl(var(--input));
+    --fc-event-text-color: hsl(var(--accent-foreground));
   }
 
   .dark {
@@ -101,4 +106,35 @@ body .focused-option-map {
 
 body .separator-map {
   @apply hidden;
+}
+
+.fc .fc-multimonth {
+  border: none;
+  padding: 0;
+}
+
+body .fc .fc-button {
+  @apply inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-inherit shadow-none ring-offset-background transition-colors hover:border-input hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active:focus,
+.fc .fc-button-primary:not(:disabled):active:focus,
+.fc .fc-button-primary:focus,
+.fc .fc-button.fc-button-active,
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  @apply border-input bg-accent text-inherit shadow-none;
+}
+
+.fc .fc-year-view .fc-col-header-cell-cushion,
+.fc .fc-year-view .fc-daygrid-day-number {
+  @apply text-xs;
+}
+
+.fc .fc-toolbar-title {
+  @apply text-xl font-bold;
+}
+
+.fc .fc-button-group {
+  @apply capitalize;
 }
