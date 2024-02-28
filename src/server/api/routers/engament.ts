@@ -8,7 +8,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
-type ReturnType = Engament & { Conference: Conference };
+export type ReturnType = Engament & { Conference: Conference };
 
 export const engamentRouter = createTRPCRouter({
   hello: publicProcedure
