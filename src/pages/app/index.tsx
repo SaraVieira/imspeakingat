@@ -1,31 +1,19 @@
-import ReactCountryFlag from "react-country-flag";
-import { JsonObject } from "@prisma/client/runtime/library";
 import { useState } from "react";
 import { AddEngagementForm } from "~/components/addEngagement";
-import { AccountFormValues } from "~/components/addEngagement/schema";
+import { type AccountFormValues } from "~/components/addEngagement/schema";
 import { AppLayout } from "~/components/appLayout";
 import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
 import { toast } from "~/components/ui/use-toast";
 import { api } from "~/utils/api";
-import {
-  differenceInDays,
-  format,
-  formatDistanceToNow,
-  formatDistanceToNowStrict,
-} from "date-fns";
-import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import { differenceInDays } from "date-fns";
+
 import { ConferenceCard } from "~/components/conference";
 import { cn } from "~/lib/utils";
 
@@ -91,13 +79,13 @@ const AppPage = () => {
               <h1 className="mb-8 text-xl font-bold">
                 Your next conference is in{" "}
                 {differenceInDays(
-                  data.future[0]?.Conference?.dateStart as Date,
+                  data.future[0]?.Conference?.dateStart!,
                   new Date(),
                 )}{" "}
                 days
               </h1>
               <div className="flex flex-col gap-4">
-                {data?.future?.map((e) => <ConferenceCard {...e} />)}
+                {data?.future?.map((e) => <ConferenceCard key={e.id} {...e} />)}
               </div>
             </>
           ) : null}
@@ -107,7 +95,9 @@ const AppPage = () => {
                 Past Conferences
               </h1>
               <div className="flex flex-col gap-4">
-                {data?.past?.map((e) => <ConferenceCard {...e} past />)}
+                {data?.past?.map((e) => (
+                  <ConferenceCard key={e.id} {...e} past />
+                ))}
               </div>
             </div>
           ) : null}

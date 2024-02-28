@@ -25,7 +25,7 @@ export function UserNav() {
             {data?.user.image && (
               <AvatarImage src={data?.user.image} alt={data?.user.username} />
             )}
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarFallback>{data?.user.username[0]}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -44,7 +44,9 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={`/u/${data?.user.username}`}>Profile</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <Link href={"/app/settings"}>Settings</Link>
           </DropdownMenuItem>

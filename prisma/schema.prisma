@@ -57,11 +57,18 @@ model User {
     id            String     @id @default(cuid())
     username      String?    @unique
     bio           String?
-    links         Json?
+    website       String?
+    github        String?
+    x             String?
+    threads       String?
+    mastodon      String?
+    linkedin      String?
     name          String?
     email         String?    @unique
     emailVerified DateTime?
     image         String?
+    locationCode  String?
+    locationName  String?
     userType      UserType   @default(USER)
     accounts      Account[]
     sessions      Session[]
