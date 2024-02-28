@@ -45,15 +45,15 @@ export const ConferenceCard = ({
           </span>
         </h4>
 
-        <p className="!mt-0 flex items-center gap-2 text-muted-foreground">
-          <ReactCountryFlag countryCode={country.shortText} svg />
-          {format(new Date(Conference?.dateStart), "dd MMMM yyyy")}{" "}
-          {Conference?.dateEnd && (
-            <>
-              - {format(new Date(Conference?.dateEnd), "dd MMMM yyyy")}
-            </>
-          )}
-        </p>
+        {Conference && (
+          <p className="!mt-0 flex items-center gap-2 text-muted-foreground">
+            <ReactCountryFlag countryCode={country?.shortText} svg />
+            {format(new Date(Conference?.dateStart), "dd MMMM yyyy")}{" "}
+            {Conference?.dateEnd && (
+              <>- {format(new Date(Conference?.dateEnd), "dd MMMM yyyy")}</>
+            )}
+          </p>
+        )}
       </CardHeader>
     </Card>
   );
