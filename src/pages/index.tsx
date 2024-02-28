@@ -36,7 +36,7 @@ export default function Home() {
           <HeroHome />
           <Features />
           {/* <FeaturesBlocks /> */}
-          {/* <Testimonials /> */}
+          <Testimonials />
         </main>
 
         {/*  Site footer */}
