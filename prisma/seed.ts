@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+
+// this file is trash, please fold both countries and confs
 export const countries = [
   {
     name: "Afghanistan",
