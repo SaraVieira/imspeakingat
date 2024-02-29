@@ -28,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { DateRange } from "react-day-picker";
 
 export const AddEngagementForm = ({
   onSubmit,
@@ -200,7 +201,7 @@ export const AddEngagementForm = ({
                   <FormLabel>Dates</FormLabel>
                   <FormControl>
                     <DatePicker
-                      selected={field.value}
+                      selected={field.value as unknown as DateRange}
                       onSelect={field.onChange}
                     />
                   </FormControl>
