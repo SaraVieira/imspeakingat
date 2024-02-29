@@ -27,7 +27,9 @@ export function UserNav() {
             {data?.user.image && (
               <AvatarImage src={data?.user.image} alt={data?.user.username} />
             )}
-            <AvatarFallback>{data?.user.username[0]}</AvatarFallback>
+            <AvatarFallback>
+              {data?.user.username ? data.user.username[0] : data?.user.name}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
