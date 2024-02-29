@@ -12,10 +12,12 @@ import {
 } from "./ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export function UserNav() {
   const { data } = useSession();
   const { setTheme, theme } = useTheme();
+  const route = useRouter();
 
   return (
     <DropdownMenu>
@@ -44,11 +46,22 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          {!route.pathname.includes("app") ? (
+            <DropdownMenuItem>
+              <Link className="w-full" href={`/app`}>
+                To app
+              </Link>
+            </DropdownMenuItem>
+          ) : null}
           <DropdownMenuItem>
-            <Link href={`/u/${data?.user.username}`}>Profile</Link>
+            <Link className="w-full" href={`/u/${data?.user.username}`}>
+              Profile
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href={"/app/settings"}>Settings</Link>
+            <Link className="w-full" href={"/app/settings"}>
+              Settings
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
