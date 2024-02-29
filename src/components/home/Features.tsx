@@ -32,7 +32,7 @@ function Features() {
         <div className="pt-12 md:pt-20">
           {/* Section header */}
           <div className="mx-auto max-w-3xl pb-12 text-center md:pb-16">
-            <h1 className="h2 mb-4">Explore the solutions</h1>
+            <h1 className="h2 mb-4">Why use us?</h1>
             <p className="text-xl text-zinc-600">
               Duis aute irure dolor in reprehenderit in voluptate velit esse
               cillum dolore eu fugiat nulla pariatur excepteur sint occaecat
@@ -47,14 +47,6 @@ function Features() {
               className="mx-auto max-w-xl md:col-span-7 md:mt-6 md:w-full md:max-w-none lg:col-span-6"
               data-aos="fade-right"
             >
-              <div className="mb-8 md:pr-4 lg:pr-12 xl:pr-16">
-                <h3 className="h3 mb-3">Powerful suite of tools</h3>
-                <p className="text-xl text-zinc-600">
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa.
-                </p>
-              </div>
               {/* Tabs buttons */}
               <div className="mb-8 md:mb-0">
                 <a
@@ -67,11 +59,10 @@ function Features() {
                 >
                   <div>
                     <div className="mb-1 font-bold leading-snug tracking-tight">
-                      Building the Simple ecosystem
+                      Keep your events in check
                     </div>
                     <div className="text-zinc-600">
-                      Take collaboration to the next level with security and
-                      administrative features built for teams.
+                      humans are complicated plants, we forget everything
                     </div>
                   </div>
                   <div className="ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
@@ -94,11 +85,10 @@ function Features() {
                 >
                   <div>
                     <div className="mb-1 font-bold leading-snug tracking-tight">
-                      Building the Simple ecosystem
+                      Share a page with your events
                     </div>
                     <div className="text-zinc-600">
-                      Take collaboration to the next level with security and
-                      administrative features built for teams.
+                      Forget that random note you have somewhere in your phone
                     </div>
                   </div>
                   <div className="ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
@@ -122,14 +112,11 @@ function Features() {
                     setTab(3);
                   }}
                 >
-                  <div>
+                  <div className="grow">
                     <div className="mb-1 font-bold leading-snug tracking-tight">
-                      Building the Simple ecosystem
+                      yes?
                     </div>
-                    <div className="text-zinc-600">
-                      Take collaboration to the next level with security and
-                      administrative features built for teams.
-                    </div>
+                    <div className="text-zinc-600">Tyes</div>
                   </div>
                   <div className="ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
                     <svg

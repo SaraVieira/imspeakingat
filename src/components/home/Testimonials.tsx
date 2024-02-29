@@ -43,14 +43,12 @@ function Testimonials() {
           {/* Section header */}
           <div className="mx-auto max-w-3xl pb-12 text-center md:pb-16">
             <h2 className="h2 mb-4">
-              Trusted by over 20,000 companies all over the world
+              Trusted by the conference speakers that made it
             </h2>
             <p className="text-xl text-zinc-600" data-aos="zoom-y-out">
-              Arcu cursus vitae congue mauris rhoncus viverra nibh cras pulvinar
-              mattis blandit libero cursus mattis.
+              And a couple more that work in places like
             </p>
           </div>
-
           {/* Items */}
           <div className="mx-auto grid max-w-sm grid-cols-4 gap-2 md:max-w-4xl md:grid-cols-5">
             {/* Item */}
@@ -119,10 +117,9 @@ function Testimonials() {
             </div>
           </div>
 
-          {/* Testimonials */}
-          <div className="mx-auto mt-20 max-w-3xl" data-aos="zoom-y-out">
+          {/* <div className="mx-auto mt-20 max-w-3xl" data-aos="zoom-y-out">
             <div className="relative flex items-start rounded border-2 border-zinc-200 bg-white">
-              {/* Testimonial */}
+           
               <div className="mx-4 px-12 py-8 pt-20 text-center md:mx-0">
                 <div className="absolute left-1/2 top-0 -mt-8 -translate-x-1/2 transform">
                   <svg
@@ -157,7 +154,7 @@ function Testimonials() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
