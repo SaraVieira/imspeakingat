@@ -2,23 +2,11 @@ import { type Conference, type Engament, EngamentType } from "@prisma/client";
 import { isPast } from "date-fns";
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export type ReturnType = Engament & { Conference: Conference };
 
-export const engamentRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
+export const eventsRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
@@ -28,23 +16,25 @@ export const engamentRouter = createTRPCRouter({
           EngamentType.PANEL,
           EngamentType.TALK,
         ]),
-        date: z.object({
-          from: z.date(),
-          to: z.date().optional(),
-        }),
-        location: z.any(),
-        confName: z.string(),
+        date: z
+          .object({
+            from: z.date(),
+            to: z.date().optional(),
+          })
+          .optional(),
+        location: z.any().optional(),
+        confName: z.string().optional(),
         talkTitle: z.string().optional(),
         confId: z.string().optional(),
         confWebsite: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (!input.confId) {
+      if (!input.confId && input.date) {
         const { id } = await ctx.db.conference.create({
           data: {
             location: input.location,
-            name: input.confName,
+            name: input.confName!,
             dateStart: input.date.from,
             dateEnd: input.date.to,
             website: input.confWebsite,
@@ -71,6 +61,49 @@ export const engamentRouter = createTRPCRouter({
         },
         include: {
           Conference: true,
+        },
+      });
+    }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        type: z.enum([
+          EngamentType.MC,
+          EngamentType.OTHER,
+          EngamentType.PANEL,
+          EngamentType.TALK,
+        ]),
+        talkTitle: z.string().optional(),
+        confId: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.engament.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          talk: input.talkTitle ?? "",
+          type: input.type,
+          createdById: ctx.session.user.id,
+          conferenceId: input.confId,
+        },
+        include: {
+          Conference: true,
+        },
+      });
+    }),
+  delete: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.engament.delete({
+        where: {
+          id: input.id,
         },
       });
     }),
