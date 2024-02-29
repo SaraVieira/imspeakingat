@@ -34,7 +34,7 @@ export const eventsRouter = createTRPCRouter({
         const { id } = await ctx.db.conference.create({
           data: {
             location: input.location,
-            name: input.confName as string,
+            name: input.confName!,
             dateStart: input.date.from,
             dateEnd: input.date.to,
             website: input.confWebsite,
