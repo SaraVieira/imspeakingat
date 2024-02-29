@@ -68,7 +68,12 @@ export const ConferenceCard = (props: ConferenceCardProps) => {
         <div className="flex items-center gap-4">
           {Conference && (
             <p className="!mt-0 flex items-center gap-2 text-muted-foreground">
-              <ReactCountryFlag countryCode={country?.shortText} svg />
+              <ReactCountryFlag
+                countryCode={
+                  country?.shortText?.code ?? country.country?.shortText
+                }
+                svg
+              />
               {format(new Date(Conference?.dateStart), "dd MMMM yyyy")}{" "}
               {Conference?.dateEnd && (
                 <>- {format(new Date(Conference?.dateEnd), "dd MMMM yyyy")}</>

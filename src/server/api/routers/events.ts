@@ -16,10 +16,12 @@ export const eventsRouter = createTRPCRouter({
           EngamentType.PANEL,
           EngamentType.TALK,
         ]),
-        date: z.object({
-          from: z.date(),
-          to: z.date().optional(),
-        }),
+        date: z
+          .object({
+            from: z.date(),
+            to: z.date().optional(),
+          })
+          .optional(),
         location: z.any().optional(),
         confName: z.string().optional(),
         talkTitle: z.string().optional(),
@@ -28,11 +30,11 @@ export const eventsRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (!input.confId) {
+      if (!input.confId && input.date) {
         const { id } = await ctx.db.conference.create({
           data: {
             location: input.location,
-            name: input.confName!,
+            name: input.confName as string,
             dateStart: input.date.from,
             dateEnd: input.date.to,
             website: input.confWebsite,
