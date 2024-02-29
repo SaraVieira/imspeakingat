@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import multimonth from "@fullcalendar/multimonth";
 import daygrid from "@fullcalendar/daygrid";
-import { type ReturnType } from "~/server/api/routers/engament";
+import { type ReturnType } from "~/server/api/routers/events";
 
 export const CalendarView = ({ events }: { events: ReturnType[] }) => {
   const calendarEvents = events.map((e) => ({

@@ -13,32 +13,39 @@ export const accountFormSchema = z.object({
       required_error: "You need to select a type.",
     },
   ),
-  date: z.object({
-    from: z.date({ required_error: "A date is required." }),
-    to: z.date({ required_error: "A date is required." }).optional(),
-  }),
-  location: z.object({
-    label: z.string(),
-    value: z.object({
-      description: z.string(),
-      // https://www.google.com/maps/search/?api=1&query=${value.description}=${value.place_id}
-      place_id: z.string(),
-      reference: z.string(),
-      structured_formatting: z.object({
-        main_text: z.string(),
-      }),
-      terms: z.array(
-        z.object({
-          offset: z.number(),
-          value: z.string(),
+  confId: z.string().optional(),
+  date: z
+    .object({
+      from: z.date({ required_error: "A date is required." }),
+      to: z.date({ required_error: "A date is required." }).optional(),
+    })
+    .optional(),
+  location: z
+    .object({
+      label: z.string(),
+      value: z.object({
+        description: z.string(),
+        // https://www.google.com/maps/search/?api=1&query=${value.description}=${value.place_id}
+        place_id: z.string(),
+        reference: z.string(),
+        structured_formatting: z.object({
+          main_text: z.string(),
         }),
-      ),
-      types: z.array(z.string()),
-    }),
-  }),
-  confName: z.string({
-    required_error: "A conference name is required.",
-  }),
+        terms: z.array(
+          z.object({
+            offset: z.number(),
+            value: z.string(),
+          }),
+        ),
+        types: z.array(z.string()),
+      }),
+    })
+    .optional(),
+  confName: z
+    .string({
+      required_error: "A conference name is required.",
+    })
+    .optional(),
   talkTitle: z.string().optional(),
   confWebsite: z.string().optional(),
 });

@@ -21,8 +21,8 @@ import { CalendarView } from "~/components/calendarView";
 
 const AppPage = () => {
   const [open, setOpen] = useState(false);
-  const { data, refetch } = api.engament.getAll.useQuery();
-  const addEngagement = api.engament.create.useMutation({
+  const { data, refetch } = api.events.getAll.useQuery();
+  const addEngagement = api.events.create.useMutation({
     onSuccess: () => {
       toast({
         title: "Created!",
@@ -31,13 +31,17 @@ const AppPage = () => {
     },
   });
   async function onSubmit(data: AccountFormValues) {
-    const placeData = await fetch(
-      `https://places.googleapis.com/v1/places/${data.location.value.place_id}?fields=addressComponents,formattedAddress,googleMapsUri,location,plusCode,shortFormattedAddress,utcOffsetMinutes,types,viewport&key=${process.env.NEXT_PUBLIC_GPLACES_KEY}`,
-    ).then((rsp) => rsp.json());
-    await addEngagement.mutateAsync({
-      ...data,
-      location: placeData,
-    });
+    if (!data.confId && data.location) {
+      const placeData = await fetch(
+        `https://places.googleapis.com/v1/places/${data.location.value.place_id}?fields=addressComponents,formattedAddress,googleMapsUri,location,plusCode,shortFormattedAddress,utcOffsetMinutes,types,viewport&key=${process.env.NEXT_PUBLIC_GPLACES_KEY}`,
+      ).then((rsp) => rsp.json());
+      await addEngagement.mutateAsync({
+        ...data,
+        location: placeData,
+      });
+    } else {
+      await addEngagement.mutateAsync(data);
+    }
     refetch();
   }
   return (
@@ -85,7 +89,7 @@ const AppPage = () => {
               {data.future.length ? (
                 <>
                   <h1 className="mb-8 text-xl font-bold">
-                    Your next conference is in{" "}
+                    Your next event is in{" "}
                     {differenceInDays(
                       data.future[0]?.Conference?.dateStart!,
                       new Date(),
@@ -94,7 +98,7 @@ const AppPage = () => {
                   </h1>
                   <div className="flex flex-col gap-4">
                     {data?.future?.map((e) => (
-                      <ConferenceCard key={e.id} {...e} />
+                      <ConferenceCard key={e.id} {...e} onDelete={refetch} />
                     ))}
                   </div>
                 </>
@@ -106,7 +110,12 @@ const AppPage = () => {
                   </h1>
                   <div className="flex flex-col gap-4">
                     {data?.past?.map((e) => (
-                      <ConferenceCard key={e.id} {...e} past />
+                      <ConferenceCard
+                        key={e.id}
+                        {...e}
+                        past
+                        onDelete={refetch}
+                      />
                     ))}
                   </div>
                 </div>

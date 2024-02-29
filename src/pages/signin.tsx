@@ -49,7 +49,7 @@ function SignIn() {
 
               <div className="mx-auto max-w-sm space-y-3">
                 {signins.map(({ Icon, name, label, classes }) => (
-                  <div className="-mx-3 flex flex-wrap ">
+                  <div className="-mx-3 flex flex-wrap " key={name}>
                     <div className="w-full px-3">
                       <button
                         onClick={() => signIn(name, { callbackUrl: "/app" })}
