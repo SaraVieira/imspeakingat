@@ -10,9 +10,15 @@ import {
 } from "../ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
-export const ConferenceCombobox = ({ conferences }: { conferences: any[] }) => {
+export const ConferenceCombobox = ({
+  conferences,
+  handleSelect,
+}: {
+  conferences: any[];
+  handleSelect: (value: string) => void;
+}) => {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
+  const [value, setValue] = useState("");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -21,24 +27,25 @@ export const ConferenceCombobox = ({ conferences }: { conferences: any[] }) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-full justify-between"
         >
-          {name
-            ? conferences.find((conference) => conference.name === name)?.name
-            : "Select conference..."}
+          {value
+            ? conferences.find((conference) => conference.id === value)?.name
+            : "Select event..."}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search conferences..." className="h-9" />
-          <CommandEmpty>No conference found.</CommandEmpty>
+          <CommandInput placeholder="Search events..." className="h-9" />
+          <CommandEmpty>No Events Found</CommandEmpty>
           <CommandGroup>
             {conferences.map((conference) => (
               <CommandItem
-                key={conference.name}
-                value={conference.name}
+                key={conference.id}
+                value={conference.id}
                 onSelect={(currentValue) => {
-                  setName(currentValue === name ? "" : currentValue);
+                  setValue(currentValue === value ? "" : currentValue);
+                  handleSelect(currentValue);
                   setOpen(false);
                 }}
               >
@@ -47,6 +54,14 @@ export const ConferenceCombobox = ({ conferences }: { conferences: any[] }) => {
             ))}
           </CommandGroup>
         </Command>
+        <Button
+          variant="ghost"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between"
+        >
+          Add New Event
+        </Button>
       </PopoverContent>
     </Popover>
   );
