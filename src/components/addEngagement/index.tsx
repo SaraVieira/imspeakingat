@@ -1,7 +1,6 @@
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -10,7 +9,6 @@ import {
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { DatePicker } from "../datePicker";
 import { Button } from "../ui/button";
 import { type AccountFormValues, accountFormSchema } from "./schema";
@@ -29,6 +27,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import type { DateRange } from "react-day-picker";
+import { LocationInput } from "./location";
 
 export const AddEngagementForm = ({
   onSubmit,
@@ -129,7 +128,6 @@ export const AddEngagementForm = ({
 
         {!form.getValues().confId && (
           <div className="space-y-8">
-            {" "}
             <FormField
               control={form.control}
               name="confName"
@@ -167,29 +165,9 @@ export const AddEngagementForm = ({
                 <FormItem>
                   <FormLabel>Location</FormLabel>
                   <FormControl>
-                    <GooglePlacesAutocomplete
-                      apiKey={process.env.NEXT_PUBLIC_GPLACES_KEY}
-                      selectProps={{
-                        onChange: field.onChange,
-                        value: field.value?.label as any,
-                        classNames: {
-                          control: () => "control-map",
-                          input: () => "select-map",
-                          menuList: () => "list-map",
-                          indicatorSeparator: () => "separator-map",
-                          option: ({ isFocused }) =>
-                            isFocused ? "focused-option-map" : "",
-                        },
-                      }}
-                      autocompletionRequest={{
-                        types: ["(regions)"],
-                      }}
-                    />
+                    <LocationInput field={field} />
                   </FormControl>
                   <FormMessage />
-                  <FormDescription>
-                    Select where the conference is located
-                  </FormDescription>
                 </FormItem>
               )}
             />

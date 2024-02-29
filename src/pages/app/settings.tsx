@@ -6,7 +6,7 @@ import { SettingsForm } from "~/components/userSettings";
 export default function SettingsAccountPage() {
   return (
     <AppLayout>
-      <div className="space-y-6">
+      <div className="mb-8 space-y-6">
         <div>
           <h3 className="text-lg font-medium">Account</h3>
           <p className="text-sm text-muted-foreground">
