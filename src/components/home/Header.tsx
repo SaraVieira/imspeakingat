@@ -7,7 +7,6 @@ import { UserNav } from "../usermenu";
 function Header() {
   const [top, setTop] = useState(true);
   const { data } = useSession();
-  console.log(data);
 
   // detect whether user has scrolled the page down by 10px
   useEffect(() => {
