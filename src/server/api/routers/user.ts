@@ -1,7 +1,11 @@
 import { z } from "zod";
 import { accountFormSchemaInside } from "~/components/userSettings/schema";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
   create_username: protectedProcedure
@@ -25,6 +29,29 @@ export const userRouter = createTRPCRouter({
 
     return user;
   }),
+  getByUsername: publicProcedure
+    .input(z.object({ username: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findUnique({
+        where: {
+          username: input.username,
+        },
+        include: {
+          engaments: {
+            where: {
+              Conference: {
+                dateStart: {
+                  gte: new Date(),
+                },
+              },
+            },
+            include: { Conference: true },
+          },
+        },
+      });
+
+      return user;
+    }),
   update: protectedProcedure
     .input(
       z.object({

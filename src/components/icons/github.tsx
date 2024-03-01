@@ -1,6 +1,11 @@
-export const GitHubIcon = (props: any) => (
+import { cn } from "~/lib/utils";
+
+export const GitHubIcon = ({ className, ...props }: any) => (
   <svg
-    className="mx-4 h-4 w-4 flex-shrink-0 fill-current text-white opacity-75"
+    className={cn(
+      "mx-4 h-4 w-4 flex-shrink-0 fill-current text-foreground opacity-75",
+      className,
+    )}
     viewBox="0 0 16 16"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
