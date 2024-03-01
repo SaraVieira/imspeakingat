@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ReactCountryFlag from "react-country-flag";
 import { SocialLinks } from "./links";
@@ -8,10 +8,7 @@ export const ProfileInfo = ({ user }: { user: User }) => {
     <>
       <Avatar className="h-32 w-32">
         {user?.image && (
-          <AvatarImage
-            src={user?.image}
-            alt={user?.username || (user.name as string)}
-          />
+          <AvatarImage src={user?.image} alt={user?.username ?? user.name!} />
         )}
         <AvatarFallback>
           {user?.username ? user.username[0] : user?.name}

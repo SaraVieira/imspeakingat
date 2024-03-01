@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Moon, Sun } from "lucide-react";
-import { GetServerSidePropsContext } from "next";
+import { type GetServerSidePropsContext } from "next";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import { GitHubIcon } from "~/components/icons/github";
@@ -54,7 +54,7 @@ const Profile = ({
         </Card>
         {data?.engaments?.length ? (
           <h3 className="my-8 text-xl font-bold">
-            <span className="capitalize">{data?.username || data?.name}</span>{" "}
+            <span className="capitalize">{data?.username ?? data?.name}</span>{" "}
             has {data?.engaments.length} event
             {data?.engaments?.length > 1 && "s"} coming up:
           </h3>
@@ -117,7 +117,7 @@ export default Profile;
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{ username: string }>,
 ) {
-  const username = context.params?.username as string;
+  const username = context.params?.username!;
   await SSRHelpers.user.getByUsername.prefetch({ username });
   const user = await axios.get(
     `${process.env.NEXTAUTH_URL}/api/trpc/user.getByUsername?batch=1&input={"0":{"json":{"username":"${username}"}}}`,

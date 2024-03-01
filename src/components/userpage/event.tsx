@@ -1,7 +1,7 @@
 import ReactCountryFlag from "react-country-flag";
 import { Card, CardHeader } from "../ui/card";
 import { format } from "date-fns";
-import { Conference, EngamentType } from "@prisma/client";
+import { type Conference, type EngamentType } from "@prisma/client";
 
 export const ProfileEvent = ({
   type,

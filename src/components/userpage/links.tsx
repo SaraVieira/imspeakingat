@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 import { GitHubIcon } from "~/components/icons/github";
 import { LinkedinIcon } from "~/components/icons/linkedin";
 import { MastodonIcon } from "~/components/icons/mastadon";
