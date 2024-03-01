@@ -18,6 +18,7 @@ import { differenceInDays } from "date-fns";
 import { ConferenceCard } from "~/components/conference";
 import { cn } from "~/lib/utils";
 import { CalendarView } from "~/components/calendarView";
+import { Plus } from "lucide-react";
 
 const AppPage = () => {
   const [open, setOpen] = useState(false);
@@ -50,7 +51,10 @@ const AppPage = () => {
       <div className="flex w-full justify-end">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline">Add new</Button>
+            <Button variant="outline">
+              <Plus className="mr-2 w-4" />
+              Add new
+            </Button>
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>
