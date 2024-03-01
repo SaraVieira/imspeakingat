@@ -10,7 +10,8 @@ export const SocialLinks = ({ user }: { user: User }) => (
     {user?.github && (
       <li>
         <a
-          className="flex items-center gap-2"
+          target="_blank"
+          className=" flex items-center gap-2 underline"
           href={`https://github.com/${user.github}`}
         >
           <GitHubIcon className="mx-0" /> {user.github}
@@ -19,7 +20,11 @@ export const SocialLinks = ({ user }: { user: User }) => (
     )}
     {user?.x && (
       <li>
-        <a className="flex items-center gap-2" href={`https://x.com/${user.x}`}>
+        <a
+          target="_blank"
+          className="flex items-center gap-2 underline"
+          href={`https://x.com/${user.x}`}
+        >
           <XIcon className="mx-0 h-4 w-4 fill-current" /> {user.x}
         </a>
       </li>
@@ -27,7 +32,8 @@ export const SocialLinks = ({ user }: { user: User }) => (
     {user?.threads && (
       <li>
         <a
-          className="flex items-center gap-2"
+          target="_blank"
+          className="flex items-center gap-2 underline"
           href={`https://threads.net/@${user.threads}`}
         >
           <ThreadsIcon className="mx-0 h-4 w-4 fill-current" /> {user.threads}
@@ -37,7 +43,8 @@ export const SocialLinks = ({ user }: { user: User }) => (
     {user?.linkedin && (
       <li>
         <a
-          className="flex items-center gap-2"
+          target="_blank"
+          className="flex items-center gap-2 underline"
           href={`https://www.linkedin.com/in/${user.linkedin}`}
         >
           <LinkedinIcon className="h-4 w-4 " /> {user.linkedin}
@@ -46,7 +53,11 @@ export const SocialLinks = ({ user }: { user: User }) => (
     )}
     {user?.mastodon && (
       <li>
-        <a className="flex items-center gap-2" href={`${user?.mastodon}`}>
+        <a
+          target="_blank"
+          className=" flex items-center gap-2 underline"
+          href={`${user?.mastodon}`}
+        >
           <MastodonIcon className="mx-0 h-4 w-4 fill-current" />{" "}
           {user?.mastodon}
         </a>
