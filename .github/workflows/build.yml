@@ -15,6 +15,8 @@ jobs:
       GITHUB_CLIENT_SECRET: test
       DISCORD_CLIENT_SECRET: test
       NEXT_PUBLIC_GPLACES_KEY: test
+      GOOGLE_CLIENT_ID: test
+      GOOGLE_CLIENT_SECRET: test
       NEXTAUTH_URL: http://localhost:3000
     runs-on: ${{ matrix.os }}
     strategy:

@@ -5,12 +5,16 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export const AppLayout = ({ children }: { children?: React.ReactNode }) => {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
 
   useEffect(() => {
     if (status === "unauthenticated") {
       router.replace("/");
+    }
+
+    if (status === "authenticated" && !data.user.username) {
+      router.replace("/onboarding");
     }
   }, [status]);
 
