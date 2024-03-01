@@ -18,24 +18,53 @@ import { Input } from "../components/ui/input";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "~/components/ui/use-toast";
-
-const formSchema = z.object({
-  username: z.string().min(2).max(50),
-});
+import axios from "axios";
 
 const Onboarding = () => {
   const [loading, setLoading] = useState(false);
   const { data } = useSession();
   const router = useRouter();
-  const updateUsername = api.user.create_username.useMutation({
-    onSuccess: () => {
-      router.push("/app");
-    },
+  const formSchema = z.object({
+    username: z
+      .string()
+      .min(2)
+      .max(50)
+      .trim()
+      .refine((s) => !s.includes(" "), "Spaces are not allowed")
+      .refine(
+        (s) => /^[a-zA-Z0-9_]+$/.test(s),
+        "Only numbers, characters and underscores allowed",
+      )
+      .superRefine(async (id, ctx) => {
+        if (!id) return false;
+        try {
+          const { data: available } = await axios(
+            `/api/trpc/user.checkUsername?batch=1&input={"0":{"json":{"username":"${id}"}}}`,
+          );
+          if (available?.[0]?.result?.data?.json) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "Username is taken",
+            });
+          }
+        } catch {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Username is taken",
+          });
+        }
+      }),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+    },
+  });
+
+  const updateUsername = api.user.create_username.useMutation({
+    onSuccess: () => {
+      router.push("/app");
     },
   });
 

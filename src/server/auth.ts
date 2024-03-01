@@ -58,6 +58,7 @@ export const authOptions: NextAuthOptions = {
     signIn: "/signin",
     newUser: "/onboarding",
   },
+
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
     DiscordProvider({
