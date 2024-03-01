@@ -13,9 +13,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 export const ConferenceCombobox = ({
   conferences,
   handleSelect,
+  addEvent,
 }: {
   conferences: any[];
   handleSelect: (value: string) => void;
+  addEvent: () => void;
 }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -59,6 +61,10 @@ export const ConferenceCombobox = ({
           role="combobox"
           aria-expanded={open}
           className="w-full justify-between"
+          onClick={() => {
+            setOpen(false);
+            addEvent();
+          }}
         >
           Add New Event
         </Button>

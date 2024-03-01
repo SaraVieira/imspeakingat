@@ -1,7 +1,8 @@
-import { Conference } from "@prisma/client";
 import { useState } from "react";
+
 import { DateRange } from "react-day-picker";
 import { api } from "~/utils/api";
+
 import { DatePicker } from "../datePicker";
 import {
   FormControl,
@@ -14,23 +15,20 @@ import { Input } from "../ui/input";
 import { ConferenceCombobox } from "./conferenceCombobox";
 import { LocationInput } from "./location";
 
-// id: true,
-// name: true,
-// dateStart: true,
-// dateEnd: true,
-// location: true,
-// website: true,
 export const ConferenceFields = ({ form }: { form: any }) => {
-  const [selected, setSelected] = useState<Conference | undefined>();
+  const [adding, setAdding] = useState(false);
   const { data: conferences } = api.conferences.get.useQuery();
 
   const handleSelect = (value: string) => {
     const selectedConf = conferences?.find((conf) => conf.id === value);
-    console.log(selectedConf);
     if (selectedConf) {
-      setSelected(selectedConf);
+      setAdding(false);
       form.setValue("confId", value);
     }
+  };
+
+  const addEvent = () => {
+    setAdding(true);
   };
 
   return (
@@ -38,9 +36,10 @@ export const ConferenceFields = ({ form }: { form: any }) => {
       <ConferenceCombobox
         handleSelect={handleSelect}
         conferences={conferences ?? []}
+        addEvent={addEvent}
       />
 
-      {selected && (
+      {adding && (
         <div className="space-y-8">
           <FormField
             control={form.control}

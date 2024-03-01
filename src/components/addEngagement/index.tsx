@@ -1,6 +1,5 @@
 import { addDays } from "date-fns";
 import { useForm } from "react-hook-form";
-import { api } from "~/utils/api";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EngamentType } from "@prisma/client";
@@ -27,7 +26,6 @@ export const AddEngagementForm = ({
   onSubmit: (v: AccountFormValues) => any;
   values?: any;
 }) => {
-  const { data: conferences } = api.conferences.get.useQuery();
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
     defaultValues: values
