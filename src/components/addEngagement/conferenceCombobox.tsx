@@ -44,10 +44,14 @@ export const ConferenceCombobox = ({
             {conferences.map((conference) => (
               <CommandItem
                 key={conference.id}
-                value={conference.id}
+                value={conference.name.toLowerCase()}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
-                  handleSelect(currentValue);
+                  const id = conferences.find(
+                    (conference) =>
+                      conference.name.toLowerCase() === currentValue,
+                  )?.id;
+                  setValue(id === value ? "" : id);
+                  handleSelect(id);
                   setOpen(false);
                 }}
               >
