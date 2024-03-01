@@ -7,6 +7,7 @@ import { Inter as FontSans } from "next/font/google";
 import "~/styles/globals.css";
 import { Toaster } from "~/components/ui/toaster";
 import { TooltipProvider } from "~/components/ui/tooltip";
+import Head from "next/head";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,6 +33,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
         }`,
         }}
       />
+      <Head>
+        <script
+          defer
+          data-domain="imspeaking.at"
+          src="https://analytics.iamsaravieira.com/js/script.js"
+        ></script>
+      </Head>
       <TooltipProvider>
         <SessionProvider session={session}>
           <Component {...pageProps} />

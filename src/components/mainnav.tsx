@@ -9,7 +9,7 @@ export function MainNav({
 }: React.HTMLAttributes<HTMLElement>) {
   return (
     <nav className={cn("flex items-center ", className)} {...props}>
-      <Logo className="mr-6 h-8 w-9" />
+      <Logo className="mr-6 w-14" />
       <Link
         href="/app"
         className="text-sm font-medium transition-colors hover:text-primary"

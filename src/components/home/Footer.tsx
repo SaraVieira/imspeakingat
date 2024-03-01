@@ -14,7 +14,7 @@ function Footer() {
                 className="hover:bg-white-100 flex h-8 w-8 items-center justify-center rounded-full bg-white text-zinc-600 shadow transition duration-150 ease-in-out hover:text-zinc-900"
                 aria-label="Twitter"
               >
-                <XIcon className="mx-0 h-4 w-4 fill-current" />
+                <XIcon className="mx-0 h-4 w-4 fill-current text-black" />
               </Link>
             </li>
             <li className="ml-4">
@@ -23,20 +23,24 @@ function Footer() {
                 className="hover:bg-white-100 flex h-8 w-8 items-center justify-center rounded-full bg-white text-zinc-600 shadow transition duration-150 ease-in-out hover:text-zinc-900"
                 aria-label="Github"
               >
-                <GitHubIcon className="mx-0 h-4 w-4 fill-current" />
+                <GitHubIcon className="mx-0 h-4 w-4 fill-current text-black" />
               </Link>
             </li>
           </ul>
 
-          {/* Copyrights note */}
-          <div className="mr-4 text-sm text-zinc-600">
-            Made by{" "}
-            <a
-              className="text-blue-600 hover:underline"
-              href="https://cruip.com/"
-            >
-              OUR NAMES
-            </a>
+          <div className="mr-4 flex gap-4 text-sm text-zinc-600">
+            <span>
+              Made by{" "}
+              <a
+                className="text-blue-600 hover:underline"
+                href="https://cruip.com/"
+              >
+                OUR NAMES
+              </a>
+            </span>
+            <span>
+              <Link href={"/privacy-policy"}>Privacy policy</Link>
+            </span>
           </div>
         </div>
       </div>
