@@ -11,7 +11,10 @@ jobs:
       NODE_ENV: test
       NEXTAUTH_SECRET: supersecret
       DISCORD_CLIENT_ID: test
+      GITHUB_CLIENT_ID: test
+      GITHUB_CLIENT_SECRET: test
       DISCORD_CLIENT_SECRET: test
+      NEXT_PUBLIC_GPLACES_KEY: test
       NEXTAUTH_URL: http://localhost:3000
     runs-on: ${{ matrix.os }}
     strategy:
