@@ -34,11 +34,13 @@ export const ConferenceFields = ({ form }: { form: any }) => {
 
   return (
     <>
-      <ConferenceCombobox
-        handleSelect={handleSelect}
-        conferences={conferences ?? []}
-        addEvent={addEvent}
-      />
+      {!adding && (
+        <ConferenceCombobox
+          handleSelect={handleSelect}
+          conferences={conferences ?? []}
+          addEvent={addEvent}
+        />
+      )}
 
       {adding && (
         <div className="space-y-8">
