@@ -6,6 +6,7 @@ import { api } from "~/utils/api";
 import { Inter as FontSans } from "next/font/google";
 import "~/styles/globals.css";
 import { Toaster } from "~/components/ui/toaster";
+import { TooltipProvider } from "~/components/ui/tooltip";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -31,10 +32,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
         }`,
         }}
       />
-      <SessionProvider session={session}>
-        <Component {...pageProps} />
-        <Toaster />
-      </SessionProvider>
+      <TooltipProvider>
+        <SessionProvider session={session}>
+          <Component {...pageProps} />
+          <Toaster />
+        </SessionProvider>
+      </TooltipProvider>
     </ThemeProvider>
   );
 };

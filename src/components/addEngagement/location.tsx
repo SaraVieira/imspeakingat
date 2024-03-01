@@ -1,7 +1,6 @@
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 export const LocationInput = ({ field }: any) => {
-  console.log(field.value);
   return (
     <GooglePlacesAutocomplete
       apiKey={process.env.NEXT_PUBLIC_GPLACES_KEY}
