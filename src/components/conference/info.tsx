@@ -1,4 +1,4 @@
-import { ConferenceProps } from ".";
+import type { ConferenceProps } from ".";
 
 export const ConferenceInfo = ({ type, talk, Conference }: ConferenceProps) => {
   return (

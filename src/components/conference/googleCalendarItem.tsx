@@ -1,6 +1,6 @@
 import { addDays, format } from "date-fns";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
-import { Conference } from "@prisma/client";
+import type { Conference } from "@prisma/client";
 
 export const GoogleCalendarItem = ({
   Conference,

@@ -1,5 +1,5 @@
 import { MoreVertical } from "lucide-react";
-import { ConferenceProps } from ".";
+import type { ConferenceProps } from ".";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
