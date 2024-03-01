@@ -51,7 +51,7 @@ export function UserNav() {
           {!route.pathname.includes("app") ? (
             <DropdownMenuItem>
               <Link className="w-full" href={`/app`}>
-                To app
+                App
               </Link>
             </DropdownMenuItem>
           ) : null}
