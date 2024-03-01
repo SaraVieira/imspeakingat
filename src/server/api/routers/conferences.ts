@@ -1,7 +1,6 @@
 import { type Conference, type Engament, EngamentType } from "@prisma/client";
 import { isPast } from "date-fns";
 import { z } from "zod";
-
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export type ReturnType = Engament & { Conference: Conference };
@@ -14,6 +13,10 @@ export const conferencesRouter = createTRPCRouter({
         select: {
           id: true,
           name: true,
+          dateStart: true,
+          dateEnd: true,
+          location: true,
+          website: true,
         },
         orderBy: {
           name: "asc",

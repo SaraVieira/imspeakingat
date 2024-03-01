@@ -1,3 +1,10 @@
+import { addDays } from "date-fns";
+import { useForm } from "react-hook-form";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EngamentType } from "@prisma/client";
+
+import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
@@ -6,28 +13,11 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { DatePicker } from "../datePicker";
-import { Button } from "../ui/button";
-import { type AccountFormValues, accountFormSchema } from "./schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { EngamentType } from "@prisma/client";
-import { addDays } from "date-fns";
-import { api } from "~/utils/api";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import type { DateRange } from "react-day-picker";
-import { LocationInput } from "./location";
+import { Label } from "../ui/label";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { ConferenceFields } from "./conferenceFields";
+import { accountFormSchema, type AccountFormValues } from "./schema";
 
 export const AddEngagementForm = ({
   onSubmit,
@@ -36,7 +26,6 @@ export const AddEngagementForm = ({
   onSubmit: (v: AccountFormValues) => any;
   values?: any;
 }) => {
-  const { data: conferences } = api.conferences.get.useQuery();
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
     defaultValues: values
@@ -98,97 +87,7 @@ export const AddEngagementForm = ({
           />
         ) : null}
 
-        <FormField
-          control={form.control}
-          name="confId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="block">Conference</FormLabel>
-              <FormControl className="block w-full">
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select an event" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Events</SelectLabel>
-                      {(conferences ?? []).map((c) => (
-                        <SelectItem key={c.id} value={c.id}>
-                          {c.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {!form.getValues().confId && (
-          <div className="space-y-8">
-            <FormField
-              control={form.control}
-              name="confName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Conference name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Conference name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confWebsite"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Conference website</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="url"
-                      placeholder="www.example.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Location</FormLabel>
-                  <FormControl>
-                    <LocationInput field={field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Dates</FormLabel>
-                  <FormControl>
-                    <DatePicker
-                      selected={field.value as unknown as DateRange}
-                      onSelect={field.onChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        )}
+        <ConferenceFields form={form} />
         <Button type="submit">{values ? "Update" : "Create"}</Button>
       </form>
     </Form>
