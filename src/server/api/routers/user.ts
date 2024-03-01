@@ -29,6 +29,17 @@ export const userRouter = createTRPCRouter({
 
     return user;
   }),
+  checkUsername: publicProcedure
+    .input(z.object({ username: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findMany({
+        where: {
+          username: input.username,
+        },
+      });
+
+      return !!user.length;
+    }),
   getByUsername: publicProcedure
     .input(z.object({ username: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
