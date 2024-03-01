@@ -61,10 +61,12 @@ const Onboarding = () => {
       username: "",
     },
   });
+  const { update } = useSession();
 
   const updateUsername = api.user.create_username.useMutation({
     onSuccess: () => {
-      router.push("/app");
+      update();
+      router.push("/app", undefined, { shallow: false });
     },
   });
 
