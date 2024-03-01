@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { addDays, format, isSameDay } from "date-fns";
 import { Card, CardHeader } from "./ui/card";
 import ReactCountryFlag from "react-country-flag";
 import { type Conference, type EngamentType } from "@prisma/client";
@@ -41,6 +41,20 @@ export const ConferenceCard = (props: ConferenceCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const { mutateAsync: updateEvent } = api.events.update.useMutation();
 
+  const gCalendarUrl = () => {
+    const f = (d: Date) => format(d, "yyyyMMdd");
+    const location = (Conference?.location as any)?.formattedAddress
+      ? `&location=${(Conference?.location as any)?.formattedAddress}`
+      : "";
+
+    const endDate =
+      Conference.dateEnd && f(Conference.dateEnd) !== f(Conference.dateStart)
+        ? `/${f(addDays(Conference.dateEnd, 1))}`
+        : `/${f(Conference.dateStart)}`;
+
+    return `https://calendar.google.com/calendar/u/0/r/eventedit?dates=${f(Conference.dateStart)}${endDate}&details${location}&text=${Conference.name}`;
+  };
+
   return (
     <Card>
       <CardHeader
@@ -75,9 +89,10 @@ export const ConferenceCard = (props: ConferenceCardProps) => {
                 svg
               />
               {format(new Date(Conference?.dateStart), "dd MMMM yyyy")}{" "}
-              {Conference?.dateEnd && (
-                <>- {format(new Date(Conference?.dateEnd), "dd MMMM yyyy")}</>
-              )}
+              {Conference?.dateEnd &&
+                !isSameDay(Conference.dateStart, Conference.dateEnd) && (
+                  <>- {format(new Date(Conference?.dateEnd), "dd MMMM yyyy")}</>
+                )}
             </p>
           )}
           <DropdownMenu>
@@ -110,7 +125,11 @@ export const ConferenceCard = (props: ConferenceCardProps) => {
                   </div>
                 </SheetContent>
               </Sheet>
-
+              <DropdownMenuItem>
+                <a target="_blank" href={gCalendarUrl()}>
+                  Add to Google Calendar
+                </a>
+              </DropdownMenuItem>
               <DropdownMenuItem
                 className="text-destructive"
                 onClick={async () => {
