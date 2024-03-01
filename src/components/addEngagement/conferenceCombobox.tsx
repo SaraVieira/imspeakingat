@@ -63,6 +63,7 @@ export const ConferenceCombobox = ({
           className="w-full justify-between"
           onClick={() => {
             setOpen(false);
+            setValue("");
             addEvent();
           }}
         >

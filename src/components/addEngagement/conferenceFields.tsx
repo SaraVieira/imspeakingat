@@ -29,6 +29,7 @@ export const ConferenceFields = ({ form }: { form: any }) => {
 
   const addEvent = () => {
     setAdding(true);
+    form.setValue("confId", null);
   };
 
   return (
