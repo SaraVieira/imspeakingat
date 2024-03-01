@@ -162,17 +162,17 @@ const PrivacyPolicy = () => {
           <p>
             If You decide to register through or otherwise grant us access to a
             Third-Party Social Media Service, We may collect Personal data that
-            is already associated with Your Third-Party Social Media Service's
-            account, such as Your name, Your email address, Your activities or
-            Your contact list associated with that account.
+            is already associated with Your Third-Party Social Media Service
+            {"'"}s account, such as Your name, Your email address, Your
+            activities or Your contact list associated with that account.
           </p>
           <p>
             You may also have the option of sharing additional information with
-            the Company through Your Third-Party Social Media Service's account.
-            If You choose to provide such information and Personal Data, during
-            registration or otherwise, You are giving the Company permission to
-            use, share, and store it in a manner consistent with this Privacy
-            Policy.
+            the Company through Your Third-Party Social Media Service{"'"}s
+            account. If You choose to provide such information and Personal
+            Data, during registration or otherwise, You are giving the Company
+            permission to use, share, and store it in a manner consistent with
+            this Privacy Policy.
           </p>
           <h4 className="h4 my-2">Tracking Technologies and Cookies</h4>
           <p>
@@ -261,7 +261,7 @@ const PrivacyPolicy = () => {
           <h3 className="h3 my-4">Transfer of Your Personal Data</h3>
           <p>
             Your information, including Personal Data, is processed at the
-            Company's operating offices and in any other places where the
+            Company{"'"}s operating offices and in any other places where the
             parties involved in the processing are located. It means that this
             information may be transferred to — and maintained on — computers
             located outside of Your state, province, country or other
@@ -333,7 +333,7 @@ const PrivacyPolicy = () => {
             commercially acceptable means to protect Your Personal Data, We
             cannot guarantee its absolute security.
           </p>
-          <h2 className="h2 my-4">Children's Privacy</h2>
+          <h2 className="h2 my-4">Children{"'"}s Privacy</h2>
           <p>
             Our Service does not address anyone under the age of 13. We do not
             knowingly collect personally identifiable information from anyone
@@ -346,14 +346,14 @@ const PrivacyPolicy = () => {
           <p>
             If We need to rely on consent as a legal basis for processing Your
             information and Your country requires consent from a parent, We may
-            require Your parent's consent before We collect and use that
+            require Your parent{"'"}s consent before We collect and use that
             information.
           </p>
           <h2 className="h2 my-4">Links to Other Websites</h2>
           <p>
             Our Service may contain links to other websites that are not
             operated by Us. If You click on a third party link, You will be
-            directed to that third party's site. We strongly advise You to
+            directed to that third party{"'"}s site. We strongly advise You to
             review the Privacy Policy of every site You visit.
           </p>
           <p>
