@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { DateRange } from "react-day-picker";
+import type { DateRange } from "react-day-picker";
 import { api } from "~/utils/api";
 
 import { DatePicker } from "../datePicker";
