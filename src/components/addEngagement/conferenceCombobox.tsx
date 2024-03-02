@@ -37,10 +37,10 @@ export const ConferenceCombobox = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
-        <Command>
+        <Command className="w-[363px] sm:w-[335px]">
           <CommandInput placeholder="Search events..." className="h-9" />
           <CommandEmpty>No Events Found</CommandEmpty>
-          <CommandGroup>
+          <CommandGroup className="max-h-[200px] overflow-auto">
             {conferences.map((conference) => (
               <CommandItem
                 key={conference.id}

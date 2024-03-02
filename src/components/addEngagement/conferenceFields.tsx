@@ -17,7 +17,7 @@ import { LocationInput } from "./location";
 
 export const ConferenceFields = ({ form }: { form: any }) => {
   const [adding, setAdding] = useState(false);
-  const { data: conferences } = api.conferences.get.useQuery();
+  const { data: conferences } = api.conferences.get.useQuery({ limit: 30 });
 
   const handleSelect = (value: string) => {
     const selectedConf = conferences?.find((conf) => conf.id === value);
