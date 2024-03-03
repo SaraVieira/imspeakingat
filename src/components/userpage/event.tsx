@@ -40,9 +40,7 @@ export const ProfileEvent = ({
           {conference && (
             <p className="!mt-0 flex items-center gap-2 text-muted-foreground">
               <ReactCountryFlag
-                countryCode={
-                  country?.shortText?.code ?? country.country?.shortText
-                }
+                countryCode={country?.shortText?.code ?? country?.shortText}
                 svg
               />
               {format(new Date(conference?.dateStart), "dd MMMM yyyy")}{" "}

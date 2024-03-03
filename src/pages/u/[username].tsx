@@ -47,10 +47,12 @@ const Profile = ({
           <CardHeader className="block flex-row items-center gap-4 sm:flex">
             <ProfileInfo user={data} />
           </CardHeader>
-          <CardContent>
-            <h4 className="mb-2 font-semibold">Bio</h4>
-            <p>{data?.bio}</p>
-          </CardContent>
+          {data.bio ? (
+            <CardContent>
+              <h4 className="mb-2 font-semibold">Bio</h4>
+              <p>{data?.bio}</p>
+            </CardContent>
+          ) : null}
         </Card>
         {data?.gigs?.length ? (
           <h3 className="my-8 text-xl font-bold">

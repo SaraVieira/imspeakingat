@@ -47,6 +47,7 @@ export const userRouter = createTRPCRouter({
         where: {
           username: input.username,
         },
+
         include: {
           gigs: {
             where: {
@@ -54,6 +55,11 @@ export const userRouter = createTRPCRouter({
                 dateStart: {
                   gte: new Date(),
                 },
+              },
+            },
+            orderBy: {
+              conference: {
+                dateStart: "asc",
               },
             },
             include: { conference: true },
