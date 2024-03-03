@@ -77,30 +77,24 @@ export const SettingsForm = () => {
                     <FormControl>
                       <Input placeholder="Your username" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      This is the name that will be displayed on your profile.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="website"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Website</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input
-                        type="url"
-                        placeholder="awesomedev.io"
-                        {...field}
-                      />
+                      <Input placeholder="Your name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="location"
@@ -146,6 +140,23 @@ export const SettingsForm = () => {
               />
             </div>
             <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="website"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Website</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="url"
+                        placeholder="awesomedev.io"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="github"

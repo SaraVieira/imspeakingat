@@ -9,6 +9,7 @@ export const accountFormSchemaInside = {
     .max(30, {
       message: "Username must not be longer than 30 characters.",
     }),
+  name: z.string().optional(),
   bio: z.string().optional(),
   website: z.string().url().optional(),
   github: z.string().optional(),
