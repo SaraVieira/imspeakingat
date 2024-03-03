@@ -20,6 +20,13 @@ export const ProfileInfo = ({ user }: { user: User }) => {
         <div>
           <h2 className="block text-xl font-semibold">@{user?.username}</h2>
           <span>{user?.name}</span>
+
+          <div>
+            {user?.locationCode && (
+              <ReactCountryFlag countryCode={user?.locationCode} />
+            )}{" "}
+            {user?.locationName}
+          </div>
           <a
             target="_blank"
             className=" mt-4 flex items-center gap-2 underline"
@@ -27,12 +34,6 @@ export const ProfileInfo = ({ user }: { user: User }) => {
           >
             <Globe className="mx-0 w-4" /> Website
           </a>
-          <div>
-            {user?.locationCode && (
-              <ReactCountryFlag countryCode={user?.locationCode} />
-            )}{" "}
-            {user?.locationName}
-          </div>
         </div>
         <SocialLinks user={user} />
       </div>
