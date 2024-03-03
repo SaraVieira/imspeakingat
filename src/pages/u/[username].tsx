@@ -1,3 +1,4 @@
+import { Conference, Gig, User } from "@prisma/client";
 import axios from "axios";
 import { Moon, Sun } from "lucide-react";
 import { type GetServerSidePropsContext } from "next";
@@ -13,23 +14,17 @@ import {
 } from "~/components/ui/tooltip";
 import { ProfileEvent } from "~/components/userpage/event";
 import { ProfileInfo } from "~/components/userpage/info";
-import { api } from "~/utils/api";
 import { SSRHelpers } from "~/utils/trpc";
 
 const Profile = ({
-  username,
+  data,
   url,
-  ssrUser,
 }: {
-  username: string;
-  url: string;
-  ssrUser: {
-    username: string;
-    image: string;
-    events: number;
+  data: User & {
+    gigs: (Gig & { conference: Conference })[];
   };
+  url: string;
 }) => {
-  const { data } = api.user.getByUsername.useQuery({ username });
   const { setTheme, theme } = useTheme();
 
   return (
@@ -37,11 +32,11 @@ const Profile = ({
       <SEO isProfile>
         <meta
           property="twitter:image"
-          content={`${url}/api/og/profile?username=${ssrUser.username}&image=${ssrUser.image}&events=${ssrUser.events}`}
+          content={`${url}/api/og/profile?username=${data.username}&image=${data.image}&events=${data.gigs.length}`}
         />
         <meta
           property="og:image"
-          content={`${url}/api/og/profile?username=${ssrUser.username}&image=${ssrUser.image}&events=${ssrUser.events}`}
+          content={`${url}/api/og/profile?username=${data.username}&image=${data.image}&events=${data.gigs.length}`}
         />
       </SEO>
 
@@ -125,16 +120,10 @@ export async function getServerSideProps(
     `${process.env.NEXTAUTH_URL}/api/trpc/user.getByUsername?batch=1&input={"0":{"json":{"username":"${username}"}}}`,
   );
   const BeUser = user?.data[0]?.result?.data?.json ?? {};
-
   return {
     props: {
-      ssrUser: {
-        username: BeUser.username || BeUser.name || "",
-        image: BeUser.image || "",
-        events: BeUser.gigs?.length || 0,
-      },
       url: process.env.NEXTAUTH_URL,
-      username,
+      data: BeUser,
       trpcState: SSRHelpers.dehydrate(),
     },
   };
