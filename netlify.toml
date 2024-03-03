@@ -1,6 +1,10 @@
 [functions]
-    included_files = [
+included_files = [
     "node_modules/next/dist/server/future/route-modules/pages/vendored/contexts/router-context*",
     "node_modules/next/dist/server/future/route-modules/pages/vendored/contexts/amp-context*",
     "node_modules/next/dist/server/future/route-modules/pages/vendored/contexts/head-manager-context*",
-    ]
+]
+[[redirects]]
+from = "*.imspeaking.at"
+to = "/u/*"
+status = 301
