@@ -2,7 +2,6 @@ import axios from "axios";
 import { Moon, Sun } from "lucide-react";
 import { type GetServerSidePropsContext } from "next";
 import { useTheme } from "next-themes";
-import Head from "next/head";
 import { GitHubIcon } from "~/components/icons/github";
 import { SEO } from "~/components/seo";
 import { Button } from "~/components/ui/button";
@@ -95,18 +94,14 @@ const Profile = ({
               </Button>
             </a>
             <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  size={"sm"}
-                  variant={"ghost"}
-                  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                >
-                  {theme === "light" ? (
-                    <Moon className="w-5" />
-                  ) : (
-                    <Sun className="w-5" />
-                  )}
-                </Button>
+              <TooltipTrigger
+                onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              >
+                {theme === "light" ? (
+                  <Moon className="w-5" />
+                ) : (
+                  <Sun className="w-5" />
+                )}
               </TooltipTrigger>
               <TooltipContent>
                 <p> {theme === "light" ? "Dark Mode" : "Light mode"}</p>
