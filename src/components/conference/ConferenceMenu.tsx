@@ -26,7 +26,7 @@ export const ConferenceMenu = (
   const { mutateAsync: deleteEvent } = api.events.delete.useMutation();
   const [isEditing, setIsEditing] = useState(false);
   const { mutateAsync: updateEvent } = api.events.update.useMutation();
-  const { id, Conference, onDelete } = props;
+  const { id, conference, onDelete } = props;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -59,7 +59,7 @@ export const ConferenceMenu = (
             </div>
           </SheetContent>
         </Sheet>
-        <GoogleCalendarItem Conference={Conference} />
+        <GoogleCalendarItem conference={conference} />
         <DropdownMenuItem
           className="text-destructive"
           onClick={async () => {

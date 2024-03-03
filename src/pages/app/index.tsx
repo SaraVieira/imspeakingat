@@ -97,7 +97,7 @@ const AppPage = () => {
                       <h1 className="mb-8 text-xl font-bold">
                         Your next event is in{" "}
                         {differenceInDays(
-                          data.future[0]?.Conference?.dateStart!,
+                          data.future[0]?.conference?.dateStart!,
                           new Date(),
                         )}{" "}
                         days

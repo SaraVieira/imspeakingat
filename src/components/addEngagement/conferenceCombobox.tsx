@@ -9,18 +9,28 @@ import {
   CommandItem,
 } from "../ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { api } from "~/utils/api";
 
 export const ConferenceCombobox = ({
-  conferences,
-  handleSelect,
+  onSelect,
   addEvent,
+  defaultValue,
 }: {
-  conferences: any[];
-  handleSelect: (value: string) => void;
+  onSelect: (value: string) => void;
   addEvent: () => void;
+  defaultValue?: string;
 }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(defaultValue ?? "");
+
+  const { data: conferences } = api.conferences?.get.useQuery();
+
+  const handleSelect = (value: string) => {
+    const selectedConf = conferences?.find((conf) => conf.id === value);
+    if (selectedConf) {
+      onSelect(value);
+    }
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -32,7 +42,7 @@ export const ConferenceCombobox = ({
           className="w-full justify-between"
         >
           {value
-            ? conferences.find((conference) => conference.id === value)?.name
+            ? conferences?.find((conference) => conference.id === value)?.name
             : "Select event..."}
         </Button>
       </PopoverTrigger>
@@ -41,15 +51,15 @@ export const ConferenceCombobox = ({
           <CommandInput placeholder="Search events..." className="h-9" />
           <CommandEmpty>No Events Found</CommandEmpty>
           <CommandGroup className="max-h-[200px] overflow-auto">
-            {conferences.map((conference) => (
+            {conferences?.map((conference) => (
               <CommandItem
                 key={conference.id}
                 value={conference.name.toLowerCase()}
                 onSelect={(currentValue) => {
-                  const id = conferences.find(
+                  const id = conferences?.find(
                     (conference) =>
                       conference.name.toLowerCase() === currentValue,
-                  )?.id;
+                  )?.id!;
                   setValue(id === value ? "" : id);
                   handleSelect(id);
                   setOpen(false);

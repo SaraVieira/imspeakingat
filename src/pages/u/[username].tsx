@@ -52,15 +52,15 @@ const Profile = ({
             <p>{data?.bio}</p>
           </CardContent>
         </Card>
-        {data?.engaments?.length ? (
+        {data?.gigs?.length ? (
           <h3 className="my-8 text-xl font-bold">
             <span className="capitalize">{data?.username ?? data?.name}</span>{" "}
-            has {data?.engaments.length} event
-            {data?.engaments?.length > 1 && "s"} coming up:
+            has {data?.gigs.length} event
+            {data?.gigs?.length > 1 && "s"} coming up:
           </h3>
         ) : null}
         <div className="mb-12 space-y-4">
-          {data?.engaments.map((event) => (
+          {data?.gigs.map((event) => (
             <ProfileEvent key={event.id} {...event} />
           ))}
         </div>
@@ -129,7 +129,7 @@ export async function getServerSideProps(
       ssrUser: {
         username: BeUser.username || BeUser.name,
         image: BeUser.image,
-        events: BeUser.engaments.length,
+        events: BeUser.gigs.length,
       },
       url: process.env.NEXTAUTH_URL,
       username,

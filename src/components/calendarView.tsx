@@ -5,12 +5,12 @@ import { type ReturnType } from "~/server/api/routers/events";
 
 export const CalendarView = ({ events }: { events: ReturnType[] }) => {
   const calendarEvents = events.map((e) => ({
-    title: e.Conference?.name,
+    title: e.conference?.name,
     allDay: true,
-    ...(e.Conference?.dateEnd
-      ? { start: e.Conference?.dateStart, end: e.Conference.dateEnd }
-      : { date: e.Conference?.dateStart }),
-    ...(e.Conference?.website && { url: e.Conference.website }),
+    ...(e.conference?.dateEnd
+      ? { start: e.conference?.dateStart, end: e.conference.dateEnd }
+      : { date: e.conference?.dateStart }),
+    ...(e.conference?.website && { url: e.conference.website }),
   }));
   return (
     <FullCalendar

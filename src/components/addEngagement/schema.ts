@@ -1,20 +1,12 @@
-import { EngamentType } from "@prisma/client";
+import { GigType } from "@prisma/client";
 import { z } from "zod";
 
 export const accountFormSchema = z
   .object({
-    type: z.enum(
-      [
-        EngamentType.MC,
-        EngamentType.PANEL,
-        EngamentType.TALK,
-        EngamentType.OTHER,
-      ],
-      {
-        required_error: "You need to select a type.",
-      },
-    ),
-    confId: z.string().optional(),
+    type: z.enum([GigType.MC, GigType.PANEL, GigType.TALK, GigType.OTHER], {
+      required_error: "You need to select a type.",
+    }),
+    confId: z.string().nullable().optional(),
     date: z
       .object({
         from: z.date({ required_error: "A date is required." }),
@@ -26,7 +18,6 @@ export const accountFormSchema = z
         label: z.string(),
         value: z.object({
           description: z.string(),
-          // https://www.google.com/maps/search/?api=1&query=${value.description}=${value.place_id}
           place_id: z.string(),
           reference: z.string(),
           structured_formatting: z.object({

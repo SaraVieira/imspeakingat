@@ -48,15 +48,15 @@ export const userRouter = createTRPCRouter({
           username: input.username,
         },
         include: {
-          engaments: {
+          gigs: {
             where: {
-              Conference: {
+              conference: {
                 dateStart: {
                   gte: new Date(),
                 },
               },
             },
-            include: { Conference: true },
+            include: { conference: true },
           },
         },
       });

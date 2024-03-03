@@ -3,22 +3,22 @@ import { DropdownMenuItem } from "../ui/dropdown-menu";
 import type { Conference } from "@prisma/client";
 
 export const GoogleCalendarItem = ({
-  Conference,
+  conference,
 }: {
-  Conference: Conference;
+  conference: Conference;
 }) => {
   const gCalendarUrl = () => {
     const f = (d: Date) => format(d, "yyyyMMdd");
-    const location = (Conference?.location as any)?.formattedAddress
-      ? `&location=${(Conference?.location as any)?.formattedAddress}`
+    const location = (conference?.location as any)?.formattedAddress
+      ? `&location=${(conference?.location as any)?.formattedAddress}`
       : "";
 
     const endDate =
-      Conference.dateEnd && f(Conference.dateEnd) !== f(Conference.dateStart)
-        ? `/${f(addDays(Conference.dateEnd, 1))}`
-        : `/${f(Conference.dateStart)}`;
+      conference.dateEnd && f(conference.dateEnd) !== f(conference.dateStart)
+        ? `/${f(addDays(conference.dateEnd, 1))}`
+        : `/${f(conference.dateStart)}`;
 
-    return `https://calendar.google.com/calendar/u/0/r/eventedit?dates=${f(Conference.dateStart)}${endDate}&details${location}&text=${Conference.name}`;
+    return `https://calendar.google.com/calendar/u/0/r/eventedit?dates=${f(conference.dateStart)}${endDate}&details${location}&text=${conference.name}`;
   };
   return (
     <DropdownMenuItem>

@@ -1,14 +1,14 @@
 import { format, isSameDay } from "date-fns";
 import { Card, CardHeader } from "../ui/card";
 import ReactCountryFlag from "react-country-flag";
-import { type Conference, type EngamentType } from "@prisma/client";
+import { type Conference, type GigType } from "@prisma/client";
 import { cn } from "~/lib/utils";
 import { ConferenceInfo } from "./info";
 import { ConferenceMenu } from "./ConferenceMenu";
 
 export type ConferenceProps = {
-  Conference: Conference;
-  type: EngamentType;
+  conference: Conference;
+  type: GigType;
   talk?: string;
   id: string;
 };
@@ -19,8 +19,8 @@ type ConferenceCardProps = ConferenceProps & {
 };
 
 export const ConferenceCard = (props: ConferenceCardProps) => {
-  const { Conference, past, onDelete } = props;
-  const country = (Conference?.location as any)?.addressComponents.find(
+  const { conference, past, onDelete } = props;
+  const country = (conference?.location as any)?.addressComponents.find(
     (a: any) => a.types.includes("country"),
   );
 
@@ -34,18 +34,19 @@ export const ConferenceCard = (props: ConferenceCardProps) => {
       >
         <ConferenceInfo {...props} />
         <div className="flex items-center gap-4">
-          {Conference && (
+          {conference && (
             <p className="!mt-0 flex items-center gap-2 text-muted-foreground">
               <ReactCountryFlag
                 countryCode={
-                  country?.shortText?.code ?? country.country?.shortText
+                  country?.shortText?.code ??
+                  country?.shortText.toLocaleLowerCase()
                 }
                 svg
               />
-              {format(new Date(Conference?.dateStart), "dd MMMM yyyy")}{" "}
-              {Conference?.dateEnd &&
-                !isSameDay(Conference.dateStart, Conference.dateEnd) && (
-                  <>- {format(new Date(Conference?.dateEnd), "dd MMMM yyyy")}</>
+              {format(new Date(conference?.dateStart), "dd MMMM yyyy")}{" "}
+              {conference?.dateEnd &&
+                !isSameDay(conference.dateStart, conference.dateEnd) && (
+                  <>- {format(new Date(conference?.dateEnd), "dd MMMM yyyy")}</>
                 )}
             </p>
           )}

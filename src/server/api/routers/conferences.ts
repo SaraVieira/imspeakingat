@@ -1,9 +1,8 @@
-import { type Conference, type Engament, EngamentType } from "@prisma/client";
-import { isPast } from "date-fns";
+import { type Conference, type Gig, GigType } from "@prisma/client";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
-export type ReturnType = Engament & { Conference: Conference };
+export type ReturnType = Gig & { Conference: Conference };
 
 export const conferencesRouter = createTRPCRouter({
   get: protectedProcedure
@@ -33,12 +32,7 @@ export const conferencesRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        type: z.enum([
-          EngamentType.MC,
-          EngamentType.OTHER,
-          EngamentType.PANEL,
-          EngamentType.TALK,
-        ]),
+        type: z.enum([GigType.MC, GigType.OTHER, GigType.PANEL, GigType.TALK]),
         date: z.object({
           from: z.date(),
           to: z.date().optional(),
@@ -54,6 +48,7 @@ export const conferencesRouter = createTRPCRouter({
       if (!input.confId) {
         const { id } = await ctx.db.conference.create({
           data: {
+            slug: `${input.confName}-${new Date(input.date.from).getFullYear()}`,
             location: input.location,
             name: input.confName,
             dateStart: input.date.from,
@@ -61,7 +56,7 @@ export const conferencesRouter = createTRPCRouter({
             website: input.confWebsite,
           },
         });
-        return ctx.db.engament.create({
+        return ctx.db.gig.create({
           data: {
             talk: input.talkTitle ?? "",
             type: input.type,
@@ -69,11 +64,11 @@ export const conferencesRouter = createTRPCRouter({
             conferenceId: id,
           },
           include: {
-            Conference: true,
+            conference: true,
           },
         });
       }
-      return ctx.db.engament.create({
+      return ctx.db.gig.create({
         data: {
           talk: input.talkTitle ?? "",
           type: input.type,
@@ -81,35 +76,8 @@ export const conferencesRouter = createTRPCRouter({
           conferenceId: input.confId,
         },
         include: {
-          Conference: true,
+          conference: true,
         },
       });
     }),
-
-  getAll: protectedProcedure.query(async ({ ctx }) => {
-    const all = await ctx.db.engament.findMany({
-      orderBy: {
-        Conference: {
-          dateStart: "asc",
-        },
-      },
-      where: { createdBy: { id: ctx.session.user.id } },
-      include: {
-        Conference: true,
-      },
-    });
-    const separated = all.reduce(
-      (acc: any, curr: any) => {
-        if (isPast(curr.Conference?.dateStart as Date)) {
-          acc.past = [...acc.past, curr];
-        } else {
-          acc.future = [...acc.future, curr];
-        }
-
-        return acc;
-      },
-      { past: [], future: [] },
-    ) as unknown as { past: ReturnType[]; future: ReturnType[] };
-    return separated;
-  }),
 });

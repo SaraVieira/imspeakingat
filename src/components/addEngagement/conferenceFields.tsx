@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import type { DateRange } from "react-day-picker";
-import { api } from "~/utils/api";
 
 import { DatePicker } from "../datePicker";
 import {
@@ -17,30 +16,37 @@ import { LocationInput } from "./location";
 
 export const ConferenceFields = ({ form }: { form: any }) => {
   const [adding, setAdding] = useState(false);
-  const { data: conferences } = api.conferences.get.useQuery({ limit: 30 });
-
-  const handleSelect = (value: string) => {
-    const selectedConf = conferences?.find((conf) => conf.id === value);
-    if (selectedConf) {
-      setAdding(false);
-      form.setValue("confId", value);
-    }
-  };
 
   const addEvent = () => {
     setAdding(true);
-    form.setValue("confId", null);
+    form.setValue("confId", "");
   };
 
   return (
     <>
-      {!adding && (
-        <ConferenceCombobox
-          handleSelect={handleSelect}
-          conferences={conferences ?? []}
-          addEvent={addEvent}
-        />
-      )}
+      {/* {!adding && ( */}
+      <FormField
+        control={form.control}
+        name="confId"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Conference</FormLabel>
+            <FormControl>
+              <ConferenceCombobox
+                onSelect={(value) => {
+                  field.onChange(value);
+                  setAdding(false);
+                }}
+                addEvent={addEvent}
+                defaultValue={field.value}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      {/* // )} */}
 
       {adding && (
         <div className="space-y-8">

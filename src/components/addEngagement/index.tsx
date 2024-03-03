@@ -2,7 +2,7 @@ import { addDays } from "date-fns";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EngamentType } from "@prisma/client";
+import { GigType } from "@prisma/client";
 
 import { Button } from "../ui/button";
 import {
@@ -35,7 +35,7 @@ export const AddEngagementForm = ({
           talkTitle: values.talk,
         }
       : {
-          type: EngamentType.TALK,
+          type: GigType.TALK,
           date: {
             from: new Date(),
             to: addDays(new Date(), 2),
@@ -57,7 +57,7 @@ export const AddEngagementForm = ({
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  {Object.keys(EngamentType).map((e) => (
+                  {Object.keys(GigType).map((e) => (
                     <div className="flex items-center space-x-2" key={e}>
                       <RadioGroupItem value={e} id={e} />
                       <Label htmlFor={e} className="capitalize">

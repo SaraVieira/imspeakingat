@@ -1,6 +1,6 @@
 import type { ConferenceProps } from ".";
 
-export const ConferenceInfo = ({ type, talk, Conference }: ConferenceProps) => {
+export const ConferenceInfo = ({ type, talk, conference }: ConferenceProps) => {
   return (
     <h4 className="text font-medium leading-none">
       {type === "TALK" && `Your talk is: ${talk} `}
@@ -9,12 +9,12 @@ export const ConferenceInfo = ({ type, talk, Conference }: ConferenceProps) => {
       {type === "OTHER" && `You will be `}
       at{" "}
       <span className="font-bold">
-        {Conference?.website ? (
-          <a href={Conference.website} target="_blank">
-            {Conference.name}
+        {conference?.website ? (
+          <a href={conference.website} target="_blank">
+            {conference.name}
           </a>
         ) : (
-          Conference?.name
+          conference?.name
         )}
       </span>
     </h4>

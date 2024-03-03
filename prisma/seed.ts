@@ -1,4 +1,14 @@
 import { PrismaClient } from "@prisma/client";
+function slugify(str: string) {
+  return String(str)
+    .normalize("NFKD") // split accented characters into their base characters and diacritical marks
+    .replace(/[\u0300-\u036f]/g, "") // remove all the accents, which happen to be all in the \u03xx UNICODE block.
+    .trim() // trim leading or trailing whitespace
+    .toLowerCase() // convert to lowercase
+    .replace(/[^a-z0-9 -]/g, "") // remove non-alphanumeric characters
+    .replace(/\s+/g, "-") // replace spaces with hyphens
+    .replace(/-+/g, "-"); // remove consecutive hyphens
+}
 
 // this file is trash, please fold both countries and confs
 export const countries = [
@@ -17644,36 +17654,47 @@ export const confs = [
 const prisma = new PrismaClient();
 async function main() {
   await confs.forEach(async (element) => {
-    await prisma.conference.create({
-      data: {
-        dateStart: element.startDate,
-        dateEnd: element.endDate,
-        name: element.name,
-        description: element.description,
-        location: {
-          googleMapsUri: `https://www.google.com/maps/place/${element.location?.name}/`,
-          types: ["locality", "political"],
-          formattedAddress: element.location?.name,
-          shortFormattedAddress: element.location?.address.addressLocality,
-          addressComponents: [
-            {
-              types: ["country", "political"],
-              longText: element.location?.address.addressRegion,
-              shortText: countries.find(
-                (a) => a.name === element.location?.address.addressRegion,
-              ),
-              languageCode: "en",
-            },
-            {
-              types: ["locality", "political"],
-              longText: element.location?.address.addressLocality,
-              shortText: element.location?.address.addressLocality,
-              languageCode: "en",
-            },
-          ],
+    try {
+      await prisma.conference.create({
+        data: {
+          slug: slugify(
+            element.name.endsWith(
+              new Date(element.startDate).getFullYear().toString(),
+            )
+              ? element.name
+              : `${element.name}-${new Date(element.startDate).getFullYear()}`,
+          ),
+          dateStart: element.startDate,
+          dateEnd: element.endDate,
+          name: element.name,
+          description: element.description,
+          location: {
+            googleMapsUri: `https://www.google.com/maps/place/${element.location?.name}/`,
+            types: ["locality", "political"],
+            formattedAddress: element.location?.name,
+            shortFormattedAddress: element.location?.address.addressLocality,
+            addressComponents: [
+              {
+                types: ["country", "political"],
+                longText: element.location?.address.addressRegion,
+                shortText: countries.find(
+                  (a) => a.name === element.location?.address.addressRegion,
+                ),
+                languageCode: "en",
+              },
+              {
+                types: ["locality", "political"],
+                longText: element.location?.address.addressLocality,
+                shortText: element.location?.address.addressLocality,
+                languageCode: "en",
+              },
+            ],
+          },
         },
-      },
-    });
+      });
+    } catch {
+      console.log("failed at", element.name);
+    }
   });
 
   //   const alice = await prisma.user.upsert({

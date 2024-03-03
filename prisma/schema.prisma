@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -14,38 +15,42 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-enum EngamentType {
+enum GigType {
     TALK
     MC
     PANEL
     OTHER
 }
 
-model Engament {
-    id           String       @id @default(uuid())
-    createdAt    DateTime     @default(now())
-    updatedAt    DateTime     @updatedAt
-    type         EngamentType
+model Gig {
+    id           String      @id @default(uuid())
+    createdAt    DateTime    @default(now())
+    updatedAt    DateTime    @updatedAt
+    type         GigType
     talk         String
-    createdBy    User         @relation(fields: [createdById], references: [id])
+    createdBy    User        @relation(fields: [createdById], references: [id])
     createdById  String
-    Conference   Conference?  @relation(fields: [conferenceId], references: [id])
+    conference   Conference? @relation(fields: [conferenceId], references: [id])
     conferenceId String?
 }
 
 model Conference {
-    id          String     @id @default(uuid())
-    createdAt   DateTime   @default(now())
-    updatedAt   DateTime   @updatedAt
+    id          String    @id @default(uuid())
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    slug        String    @unique
     dateStart   DateTime
     dateEnd     DateTime?
     location    Json
     description String?
-    engaments   Engament[]
+    gigs        Gig[]
     name        String
     image       String?
-    links       Json?
     website     String?
+    github      String?
+    x           String?
+    threads     String?
+    mastodon    String?
 }
 
 enum UserType {
@@ -54,8 +59,8 @@ enum UserType {
 }
 
 model User {
-    id            String     @id @default(cuid())
-    username      String?    @unique
+    id            String    @id @default(cuid())
+    username      String?   @unique
     bio           String?
     website       String?
     github        String?
@@ -64,15 +69,15 @@ model User {
     mastodon      String?
     linkedin      String?
     name          String?
-    email         String?    @unique
+    email         String?   @unique
     emailVerified DateTime?
     image         String?
     locationCode  String?
     locationName  String?
-    userType      UserType   @default(USER)
+    userType      UserType  @default(USER)
     accounts      Account[]
     sessions      Session[]
-    engaments     Engament[]
+    gigs          Gig[]
 }
 
 // Necessary for Next auth
