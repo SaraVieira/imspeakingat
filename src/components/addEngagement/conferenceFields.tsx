@@ -17,37 +17,33 @@ import { LocationInput } from "./location";
 export const ConferenceFields = ({ form }: { form: any }) => {
   const [adding, setAdding] = useState(false);
 
-  const addEvent = () => {
-    setAdding(true);
-    form.setValue("confId", "");
-  };
-
   return (
     <>
-      {/* {!adding && ( */}
-      <FormField
-        control={form.control}
-        name="confId"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Conference</FormLabel>
-            <FormControl>
-              <ConferenceCombobox
-                onSelect={(value) => {
-                  field.onChange(value);
-                  setAdding(false);
-                }}
-                addEvent={addEvent}
-                defaultValue={field.value}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      {/* // )} */}
-
+      {!adding && (
+        <FormField
+          control={form.control}
+          name="confId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Conference</FormLabel>
+              <FormControl>
+                <ConferenceCombobox
+                  onSelect={(value) => {
+                    field.onChange(value);
+                    setAdding(false);
+                  }}
+                  addEvent={() => {
+                    setAdding(true);
+                    field.onChange("");
+                  }}
+                  defaultValue={field.value}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      )}
       {adding && (
         <div className="space-y-8">
           <FormField
