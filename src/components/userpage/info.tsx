@@ -2,6 +2,8 @@ import { type User } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ReactCountryFlag from "react-country-flag";
 import { SocialLinks } from "./links";
+import { GitHubIcon } from "../icons/github";
+import { Globe } from "lucide-react";
 
 export const ProfileInfo = ({ user }: { user: User }) => {
   return (
@@ -18,6 +20,13 @@ export const ProfileInfo = ({ user }: { user: User }) => {
         <div>
           <h2 className="block text-xl font-semibold">@{user?.username}</h2>
           <span>{user?.name}</span>
+          <a
+            target="_blank"
+            className=" mt-4 flex items-center gap-2 underline"
+            href={`${user.website}`}
+          >
+            <Globe className="mx-0 w-4" /> Website
+          </a>
           <div>
             {user?.locationCode && (
               <ReactCountryFlag countryCode={user?.locationCode} />
