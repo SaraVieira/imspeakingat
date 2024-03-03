@@ -39,7 +39,6 @@ const Profile = ({
           content={`${url}/api/og/profile?username=${data.username}&image=${data.image}&events=${data.gigs.length}`}
         />
       </SEO>
-
       <main className="container mt-12 grow">
         <Card>
           <CardHeader className="block flex-row items-center gap-4 sm:flex">
@@ -81,15 +80,17 @@ const Profile = ({
           </span>
           <div className="flex items-center">
             <a
+              aria-label="gitHub link"
               href="https://github.com/SaraVieira/imspeakingat"
               target="_blank"
             >
-              <Button variant={"ghost"} size={"sm"}>
+              <Button name="github" variant={"ghost"} size={"sm"}>
                 <GitHubIcon className="mx-0" />
               </Button>
             </a>
             <Tooltip>
               <TooltipTrigger
+                name="change theme"
                 onClick={() => setTheme(theme === "light" ? "dark" : "light")}
               >
                 {theme === "light" ? (

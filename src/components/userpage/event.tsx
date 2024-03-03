@@ -17,7 +17,6 @@ export const ProfileEvent = ({
   const country = (conference?.location as any)?.addressComponents.find(
     (a: any) => a.types.includes("country"),
   );
-  console.log(country);
   return (
     <Card>
       <CardHeader
@@ -44,8 +43,9 @@ export const ProfileEvent = ({
             <p className="!mt-0 flex items-center gap-2 text-muted-foreground">
               <Tooltip>
                 <TooltipContent>{country.longText}</TooltipContent>
-                <TooltipTrigger>
+                <TooltipTrigger name={country.longText}>
                   <ReactCountryFlag
+                    alt={country.longText}
                     countryCode={country?.shortText?.code ?? country?.shortText}
                     svg
                   />
