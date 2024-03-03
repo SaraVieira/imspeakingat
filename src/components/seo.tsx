@@ -1,8 +1,25 @@
 import Head from "next/head";
 
-export const SEO = () => {
+export const SEO = ({
+  isProfile,
+  children,
+}: {
+  isProfile?: boolean;
+  children?: React.ReactNode;
+}) => {
   return (
     <Head>
+      {isProfile ? (
+        children
+      ) : (
+        <>
+          <meta property="og:image" content="https://imspeaking.at/meta.png" />
+          <meta
+            property="twitter:image"
+            content="https://imspeaking.at/meta.png"
+          />
+        </>
+      )}
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -39,7 +56,6 @@ export const SEO = () => {
         property="og:description"
         content="all your speaking events in one place. create your own page."
       />
-      <meta property="og:image" content="https://imspeaking.at/meta.png" />
 
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content="https://imspeaking.at/" />
@@ -48,7 +64,6 @@ export const SEO = () => {
         property="twitter:description"
         content="all your speaking events in one place. create your own page."
       />
-      <meta property="twitter:image" content="https://imspeaking.at/meta.png" />
     </Head>
   );
 };

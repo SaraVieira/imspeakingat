@@ -2,7 +2,6 @@ import { type User } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ReactCountryFlag from "react-country-flag";
 import { SocialLinks } from "./links";
-import { GitHubIcon } from "../icons/github";
 import { Globe } from "lucide-react";
 
 export const ProfileInfo = ({ user }: { user: User }) => {
@@ -30,7 +29,7 @@ export const ProfileInfo = ({ user }: { user: User }) => {
           <a
             target="_blank"
             className=" mt-4 flex items-center gap-2 underline"
-            href={`${user.website}`}
+            href={`${user?.website}`}
           >
             <Globe className="mx-0 w-4" /> Website
           </a>

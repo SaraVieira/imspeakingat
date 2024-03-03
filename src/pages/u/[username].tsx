@@ -4,6 +4,7 @@ import { type GetServerSidePropsContext } from "next";
 import { useTheme } from "next-themes";
 import Head from "next/head";
 import { GitHubIcon } from "~/components/icons/github";
+import { SEO } from "~/components/seo";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import {
@@ -31,23 +32,26 @@ const Profile = ({
 }) => {
   const { data } = api.user.getByUsername.useQuery({ username });
   const { setTheme, theme } = useTheme();
-  // this will never happen but if I don't put it ts complains
-  if (!data) return null;
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Head>
+      <SEO isProfile>
+        <meta
+          property="twitter:image"
+          content={`${url}/api/og/profile?username=${ssrUser.username}&image=${ssrUser.image}&events=${ssrUser.events}`}
+        />
         <meta
           property="og:image"
           content={`${url}/api/og/profile?username=${ssrUser.username}&image=${ssrUser.image}&events=${ssrUser.events}`}
         />
-      </Head>
+      </SEO>
+
       <main className="container mt-12 grow">
         <Card>
           <CardHeader className="block flex-row items-center gap-4 sm:flex">
-            <ProfileInfo user={data} />
+            {data && <ProfileInfo user={data} />}
           </CardHeader>
-          {data.bio ? (
+          {data?.bio ? (
             <CardContent>
               <h4 className="mb-2 font-semibold">Bio</h4>
               <p>{data?.bio}</p>
@@ -67,6 +71,7 @@ const Profile = ({
           ))}
         </div>
       </main>
+
       <footer className="border-t border-border py-6">
         <div className="container flex items-center justify-between">
           <span className="text-sm text-muted-foreground">
@@ -129,9 +134,9 @@ export async function getServerSideProps(
   return {
     props: {
       ssrUser: {
-        username: BeUser.username || BeUser.name,
-        image: BeUser.image,
-        events: BeUser.gigs.length,
+        username: BeUser.username || BeUser.name || "",
+        image: BeUser.image || "",
+        events: BeUser.gigs?.length || 0,
       },
       url: process.env.NEXTAUTH_URL,
       username,
