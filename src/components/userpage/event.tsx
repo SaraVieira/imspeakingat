@@ -2,6 +2,8 @@ import ReactCountryFlag from "react-country-flag";
 import { Card, CardHeader } from "../ui/card";
 import { format } from "date-fns";
 import { type Conference, type GigType } from "@prisma/client";
+import { Tooltip, TooltipTrigger } from "../ui/tooltip";
+import { TooltipContent } from "@radix-ui/react-tooltip";
 
 export const ProfileEvent = ({
   type,
@@ -15,6 +17,7 @@ export const ProfileEvent = ({
   const country = (conference?.location as any)?.addressComponents.find(
     (a: any) => a.types.includes("country"),
   );
+  console.log(country);
   return (
     <Card>
       <CardHeader
@@ -39,10 +42,15 @@ export const ProfileEvent = ({
         <div className="flex items-center gap-4 pt-4 sm:pt-0">
           {conference && (
             <p className="!mt-0 flex items-center gap-2 text-muted-foreground">
-              <ReactCountryFlag
-                countryCode={country?.shortText?.code ?? country?.shortText}
-                svg
-              />
+              <Tooltip>
+                <TooltipContent>{country.longText}</TooltipContent>
+                <TooltipTrigger>
+                  <ReactCountryFlag
+                    countryCode={country?.shortText?.code ?? country?.shortText}
+                    svg
+                  />
+                </TooltipTrigger>
+              </Tooltip>
               {format(new Date(conference?.dateStart), "dd MMMM yyyy")}{" "}
               {conference?.dateEnd && (
                 <>- {format(new Date(conference?.dateEnd), "dd MMMM yyyy")}</>
