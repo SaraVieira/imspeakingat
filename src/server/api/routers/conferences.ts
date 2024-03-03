@@ -1,10 +1,27 @@
-import { type Conference, type Gig, GigType } from "@prisma/client";
-import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { z } from 'zod';
+import {
+  createTRPCRouter,
+  protectedProcedure,
+} from '~/server/api/trpc';
+
+import {
+  type Conference,
+  type Gig,
+  GigType,
+} from '@prisma/client';
 
 export type ReturnType = Gig & { Conference: Conference };
 
 export const conferencesRouter = createTRPCRouter({
+  getBySlug: protectedProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(({ input, ctx }) => {
+      return ctx.db.conference.findUnique({
+        where: {
+          slug: input.slug,
+        },
+      });
+    }),
   get: protectedProcedure
     .input(z.object({ limit: z.number().optional() }).optional())
     .query(({ input, ctx }) => {
