@@ -1,12 +1,12 @@
-import { format, isSameDay } from "date-fns";
-import { Card, CardHeader } from "../ui/card";
-import ReactCountryFlag from "react-country-flag";
 import { type Conference, type GigType } from "@prisma/client";
-import { cn } from "~/lib/utils";
-import { ConferenceInfo } from "./info";
-import { ConferenceMenu } from "./ConferenceMenu";
-import { Tooltip, TooltipTrigger } from "../ui/tooltip";
 import { TooltipContent } from "@radix-ui/react-tooltip";
+import ReactCountryFlag from "react-country-flag";
+import { cn } from "~/lib/utils";
+import { Card, CardHeader } from "../ui/card";
+import { Tooltip, TooltipTrigger } from "../ui/tooltip";
+import ConferenceDates from "./ConferenceDates";
+import { ConferenceMenu } from "./ConferenceMenu";
+import { ConferenceInfo } from "./info";
 
 export type ConferenceProps = {
   conference: Conference;
@@ -52,11 +52,7 @@ export const ConferenceCard = (props: ConferenceCardProps) => {
                   />
                 </TooltipTrigger>
               </Tooltip>
-              {format(new Date(conference?.dateStart), "dd MMMM yyyy")}{" "}
-              {conference?.dateEnd &&
-                !isSameDay(conference.dateStart, conference.dateEnd) && (
-                  <>- {format(new Date(conference?.dateEnd), "dd MMMM yyyy")}</>
-                )}
+              <ConferenceDates conference={conference} />
             </p>
           )}
           <ConferenceMenu {...props} onDelete={onDelete} />
