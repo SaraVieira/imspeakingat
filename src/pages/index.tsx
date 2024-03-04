@@ -1,59 +1,35 @@
-import { useEffect } from "react";
-import Header from "~/components/home/Header";
-import HeroHome from "~/components/home/HeroHome";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { SEO } from "~/components/seo";
-import Link from "next/link";
-import { XIcon } from "~/components/icons/x";
-import { GitHubIcon } from "~/components/icons/github";
+import { HomeLayout } from "~/components/homeLayout";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col overflow-hidden">
-      <Header />
-      <SEO />
-      <main className="flex-grow text-zinc-900">
-        <HeroHome />
-      </main>
-
-      <footer className="border-t border-zinc-800 ">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 ">
-          <div className="py-4 pt-24 md:flex md:items-center md:justify-between md:py-8">
-            <div className="flex gap-4 text-sm text-zinc-600">
-              <span>
-                Made by{" "}
-                <a
-                  className="text-blue-600 hover:underline"
-                  href="https://cruip.com/"
-                >
-                  OUR NAMES
-                </a>
-              </span>
-              /
-              <span>
-                <Link href={"/privacy-policy"}>Privacy policy</Link>
-              </span>
-            </div>
-            <ul className="flex gap-4">
-              <li>
-                <Link href="#" aria-label="Twitter">
-                  <XIcon className="mx-0 h-4 w-4 fill-current text-zinc-100 transition hover:scale-110" />
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="relative "
-                  href="https://github.com/SaraVieira/imspeakingat/"
-                  aria-label="Github"
-                >
-                  <GitHubIcon className="hover:scale-120 mx-0 h-4 w-4 fill-current text-zinc-100 transition" />
-                </Link>
-              </li>
-            </ul>
+    <HomeLayout>
+      <section className="container relative mx-auto flex flex-col items-center justify-center gap-12 py-8 sm:flex-row ">
+        <div className="text-center">
+          <h1 className="leading-tighter mb-4 text-5xl font-extrabold tracking-tighter md:text-6xl">
+            imspeaking{" "}
+            <span className="-ml-1 bg-gradient-to-r from-orange-400 to-orange-700 bg-clip-text text-transparent">
+              .at
+            </span>
+          </h1>
+          <div className="mx-auto max-w-3xl text-muted-foreground">
+            <p className="text-xl">
+              All your speaking events in one place.
+              <br />
+              Keep track, share your page.
+            </p>
           </div>
         </div>
-      </footer>
-    </div>
+
+        <div>
+          <img
+            className="mx-auto"
+            src={"/hero-image.png"}
+            width="768"
+            height="432"
+            alt="Hero"
+          />
+        </div>
+      </section>
+    </HomeLayout>
   );
 }

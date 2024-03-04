@@ -1,4 +1,4 @@
-import { Conference, Gig, User } from "@prisma/client";
+import { type Conference, type Gig, type User } from "@prisma/client";
 import axios from "axios";
 import { Moon, Sun } from "lucide-react";
 import { type GetServerSidePropsContext } from "next";

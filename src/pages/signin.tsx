@@ -2,7 +2,7 @@ import { AlertCircle } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import Header from "~/components/home/Header";
+import { HomeLayout } from "~/components/homeLayout";
 import { DiscordIcon } from "~/components/icons/discord";
 import { GitHubIcon } from "~/components/icons/github";
 import { GoogleIcon } from "~/components/icons/google";
@@ -49,56 +49,41 @@ function SignIn() {
     }
   });
   return (
-    <div className="flex min-h-screen flex-col overflow-hidden bg-zinc-100">
-      <Header />
+    <HomeLayout>
+      <section className="flex flex-col items-center">
+        <h1 className="h1 pb-12">Welcome!</h1>
 
-      <main className="flex-grow">
-        <section className="from-zinc-50-100 bg-gradient-to-b to-white">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="pb-12 pt-32 md:pb-20 md:pt-40">
-              <div className="mx-auto max-w-3xl pb-12 text-center md:pb-20">
-                <h1 className="h1 text-zinc-900">Welcome back</h1>
-              </div>
-              {query.error ? (
-                <Alert
-                  variant="destructive"
-                  className="bg- mx-auto mb-8 max-w-sm"
-                >
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>Sign In Error</AlertTitle>
-                  <AlertDescription>
-                    {
-                      // @ts-ignore
-                      errors[query.error || "Default"]
-                    }
-                  </AlertDescription>
-                </Alert>
-              ) : null}
-              <div className="mx-auto max-w-sm space-y-3">
-                {signins.map(({ Icon, name, label, classes }, index) => (
-                  <div key={index} className="-mx-3 flex flex-wrap ">
-                    <div className="w-full px-3">
-                      <button
-                        onClick={() => signIn(name, { callbackUrl: "/app" })}
-                        className={cn(
-                          "btn relative flex w-full items-center px-0 text-white ",
-                          classes,
-                        )}
-                      >
-                        <Icon />
-                        <span className="-ml-16 flex-auto pl-16 pr-8">
-                          Continue with {label}
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
+        {query.error ? (
+          <Alert variant="destructive" className="bg- mx-auto mb-8 max-w-sm">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Sign In Error</AlertTitle>
+            <AlertDescription>
+              {
+                // @ts-ignore
+                errors[query.error || "Default"]
+              }
+            </AlertDescription>
+          </Alert>
+        ) : null}
+        <div className="space-y-3 sm:w-[400px]">
+          {signins.map(({ Icon, name, label, classes }, index) => (
+            <button
+              key={index}
+              onClick={() => signIn(name, { callbackUrl: "/app" })}
+              className={cn(
+                "btn relative flex w-full items-center px-0 text-white",
+                classes,
+              )}
+            >
+              <Icon />
+              <span className="-ml-16 flex-auto pl-16 pr-8">
+                Continue with {label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+    </HomeLayout>
   );
 }
 

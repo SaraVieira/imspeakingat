@@ -3,10 +3,10 @@ import Link from "next/link";
 import { cn } from "../lib/utils";
 import Logo from "./icons/logo";
 
-export function MainNav({
+export const MainNav = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLElement>) {
+}: React.HTMLAttributes<HTMLElement>) => {
   return (
     <nav className={cn("flex items-center ", className)} {...props}>
       <Logo className="mr-6 w-14" />
@@ -18,4 +18,4 @@ export function MainNav({
       </Link>
     </nav>
   );
-}
+};

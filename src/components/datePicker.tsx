@@ -8,13 +8,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { type DateRange } from "react-day-picker";
 
-export function DatePicker({
+export const DatePicker = ({
   selected: date,
   onSelect,
 }: {
   onSelect: () => void;
   selected: DateRange;
-}) {
+}) => {
   return (
     <div>
       <Popover>
@@ -53,4 +53,4 @@ export function DatePicker({
       </Popover>
     </div>
   );
-}
+};
