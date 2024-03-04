@@ -13,9 +13,9 @@ export default function Home() {
           </h1>
           <div className="mx-auto max-w-3xl text-muted-foreground">
             <p className="text-xl">
-              All your speaking events in one place.
+              all your speaking events in one place.
               <br />
-              Keep track, share your page.
+              create your own page.
             </p>
           </div>
         </div>

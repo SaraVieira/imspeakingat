@@ -42,8 +42,13 @@ export const ProfileEvent = ({
           {conference && (
             <p className="!mt-0 flex items-center gap-2 text-muted-foreground">
               <Tooltip>
-                <TooltipContent>{country.longText}</TooltipContent>
-                <TooltipTrigger name={country.longText}>
+                <TooltipContent>
+                  {(conference.location as any)?.formattedAddress}
+                </TooltipContent>
+                <TooltipTrigger
+                  name={country.longText}
+                  className="flex items-center"
+                >
                   <ReactCountryFlag
                     alt={country.longText}
                     countryCode={country?.shortText?.code ?? country?.shortText}
