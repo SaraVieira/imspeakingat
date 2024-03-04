@@ -121,7 +121,7 @@ export const ImageComparison = ({
 
   return (
     <div
-      className="absolute top-[31px] select-none"
+      className="absolute top-[17px] select-none sm:top-[31px]"
       ref={containerRef as RefObject<HTMLDivElement> | null}
     >
       <div
@@ -156,7 +156,7 @@ export const ImageComparison = ({
         ref={secondHalfRef as RefObject<HTMLImageElement> | null}
         alt="Profile page"
       />
-      <span className="absolute bottom-2 right-2 text-xs text-muted-foreground">
+      <span className="absolute bottom-2 right-8 text-xs text-muted-foreground sm:right-2">
         Profile Page
       </span>
     </div>

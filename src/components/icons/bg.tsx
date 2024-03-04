@@ -3,7 +3,7 @@ export const HomeBg = () => (
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
     viewBox="0 0 800 800"
-    className="relative -top-12 -mt-10 lg:mt-0"
+    className="relative -mt-10 sm:-top-12 lg:mt-0"
   >
     <defs>
       <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="ccchaos-grad">

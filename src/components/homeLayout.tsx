@@ -49,10 +49,10 @@ export const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </main>
 
-      <footer className="border-t border-zinc-800  text-sm text-muted-foreground">
+      <footer className="border-t border-zinc-800  text-xs text-muted-foreground sm:text-sm">
         <div className="container mx-auto py-8">
           <div className="flex items-center justify-between">
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-2 sm:gap-4">
               <span>
                 Made by{" "}
                 <a
