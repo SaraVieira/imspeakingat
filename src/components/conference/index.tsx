@@ -5,6 +5,7 @@ import { cn } from "~/lib/utils";
 import { Card, CardHeader } from "../ui/card";
 import { Tooltip, TooltipTrigger } from "../ui/tooltip";
 import ConferenceDates from "./ConferenceDates";
+import ConferenceFlag from "./ConferenceFlag";
 import { ConferenceMenu } from "./ConferenceMenu";
 import { ConferenceInfo } from "./info";
 
@@ -22,10 +23,6 @@ type ConferenceCardProps = ConferenceProps & {
 
 export const ConferenceCard = (props: ConferenceCardProps) => {
   const { conference, past, onDelete } = props;
-  const country = (conference?.location as any)?.addressComponents.find(
-    (a: any) => a.types.includes("country"),
-  );
-
   return (
     <Card>
       <CardHeader
@@ -43,13 +40,7 @@ export const ConferenceCard = (props: ConferenceCardProps) => {
                   {(conference.location as any)?.formattedAddress}
                 </TooltipContent>
                 <TooltipTrigger className="flex items-center">
-                  <ReactCountryFlag
-                    countryCode={
-                      country?.shortText?.code ??
-                      country?.shortText.toLocaleLowerCase()
-                    }
-                    svg
-                  />
+                  <ConferenceFlag conference={conference} />
                 </TooltipTrigger>
               </Tooltip>
               <ConferenceDates conference={conference} />
