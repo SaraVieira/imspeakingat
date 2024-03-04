@@ -1,4 +1,6 @@
-import type { ConferenceProps } from ".";
+import Link from "next/link";
+
+import type { ConferenceProps } from "./";
 
 export const ConferenceInfo = ({ type, talk, conference }: ConferenceProps) => {
   return (
@@ -9,13 +11,7 @@ export const ConferenceInfo = ({ type, talk, conference }: ConferenceProps) => {
       {type === "OTHER" && `You will be `}
       at{" "}
       <span className="font-bold">
-        {conference?.website ? (
-          <a href={conference.website} target="_blank">
-            {conference.name}
-          </a>
-        ) : (
-          conference?.name
-        )}
+        <Link href={`/events/${conference.slug}`}>{conference.name}</Link>
       </span>
     </h4>
   );
