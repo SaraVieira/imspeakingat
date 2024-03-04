@@ -57,9 +57,16 @@ export const HomeLayout = ({ children }: { children: React.ReactNode }) => {
                 Made by{" "}
                 <a
                   className="text-orange-600 hover:underline"
-                  href="https://github.com/SaraVieira/imspeakingat/graphs/contributors"
+                  href="https://github.com/SaraVieira"
                 >
-                  nerds
+                  SaraVieira
+                </a>{" "}
+                &{" "}
+                <a
+                  className="text-orange-600 hover:underline"
+                  href="https://github.com/hola-soy-milk"
+                >
+                  hola-soy-milk
                 </a>
               </span>
               /
