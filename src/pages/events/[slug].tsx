@@ -1,47 +1,30 @@
-import axios from "axios";
+import { AvatarFallback } from "@radix-ui/react-avatar";
 import { type GetServerSidePropsContext } from "next";
 import { AppLayout } from "~/components/appLayout";
 import ConferenceDates from "~/components/conference/ConferenceDates";
 import ConferenceFlag from "~/components/conference/ConferenceFlag";
-import { SEO } from "~/components/seo";
+import { SocialLinks } from "~/components/links";
+import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { api } from "~/utils/api";
-import { SSRHelpers } from "~/utils/trpc";
 
 const Event = ({
   slug,
-  url,
-  ssrConference: { image },
+  // url,
+  // ssrConference: { image },
 }: {
   slug: string;
-  url: string;
-  ssrConference: { image: string };
+  // url: string;
+  // ssrConference: { image: string };
 }) => {
   const { data: conference } = api.conferences.getBySlug.useQuery({ slug });
 
   if (!conference) {
     return null;
   }
-  // type Conference = {
-  //   id: string;
-  //   createdAt: Date;
-  //   updatedAt: Date;
-  //   slug: string;
-  //   dateStart: Date;
-  //   dateEnd: Date | null;
-  //   location: Prisma.JsonValue;
-  //   description: string | null;
-  //   name: string;
-  //   image: string | null;
-  //   website: string | null;
-  //   github: string | null;
-  //   x: string | null;
-  //   threads: string | null;
-  //   mastodon: string | null;
-
   return (
     <>
-      <SEO isProfile>
+      {/* <SEO isProfile>
         <meta
           property="twitter:image"
           content={`${url}/api/og/event?slug=${slug}&image=${image}`}
@@ -50,10 +33,16 @@ const Event = ({
           property="og:image"
           content={`${url}/api/og/event?slug=${slug}&image=${image}`}
         />
-      </SEO>
+      </SEO> */}
       <AppLayout>
         <Card>
           <CardHeader className="block flex-row items-center gap-4 sm:flex">
+            {conference?.image && (
+              <Avatar className="h-32 w-32">
+                <AvatarImage src={conference?.image} alt={conference.name} />
+                <AvatarFallback>{conference?.name}</AvatarFallback>
+              </Avatar>
+            )}
             <h2 className="block text-xl font-semibold">{conference.name}</h2>
           </CardHeader>
           <CardContent>
@@ -62,6 +51,7 @@ const Event = ({
               <ConferenceDates conference={conference} />
             </h4>
             <p>{conference?.description}</p>
+            <SocialLinks socials={conference} />
           </CardContent>
         </Card>
       </AppLayout>
@@ -75,18 +65,20 @@ export async function getServerSideProps(
   context: GetServerSidePropsContext<{ slug: string }>,
 ) {
   const slug = context.params?.slug!;
-  await SSRHelpers.conferences.getBySlug.prefetch({ slug });
-  const conference = await axios.get(
-    `${process.env.NEXTAUTH_URL}/api/trpc/conferences.getBySlug?batch=1&input={"0":{"json":{"slug":"${slug}"}}}`,
-  );
-  const BeConference = conference?.data[0]?.result?.data?.json ?? {};
+
+  // TODO: Get this working for SEO
+  // await SSRHelpers.conferences.getBySlug.prefetch({ slug });
+  // const conference = await axios.get(
+  //   `${process.env.NEXTAUTH_URL}/api/trpc/conferences.getBySlug?batch=1&input={"0":{"json":{"slug":"${slug}"}}}`,
+  // );
+  // const BeConference = conference?.data[0]?.result?.data?.json ?? {};
   return {
     props: {
       slug,
-      url: process.env.NEXTAUTH_URL,
-      ssrConference: {
-        image: BeConference.image || "",
-      },
+      // url: process.env.NEXTAUTH_URL,
+      // ssrConference: {
+      //   image: BeConference.image || "",
+      // },
     },
   };
 }

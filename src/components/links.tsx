@@ -1,65 +1,75 @@
-import { type User } from "@prisma/client";
 import { GitHubIcon } from "~/components/icons/github";
 import { LinkedinIcon } from "~/components/icons/linkedin";
 import { MastodonIcon } from "~/components/icons/mastadon";
 import { ThreadsIcon } from "~/components/icons/threads";
 import { XIcon } from "~/components/icons/x";
 
-export const SocialLinks = ({ user }: { user: User }) => (
+interface SocialLinksProps {
+  socials: {
+    github: string | null;
+    x: string | null;
+    threads: string | null;
+    linkedin: string | null;
+    mastodon: string | null;
+  };
+}
+
+export const SocialLinks = ({ socials }: SocialLinksProps) => (
   <ul className="mt-7 space-y-2 sm:mt-0">
-    {user?.github && (
+    {socials?.github && (
       <li>
         <a
           target="_blank"
           className=" flex items-center gap-2 underline"
-          href={`https://github.com/${user.github}`}
+          href={`https://github.com/${socials.github}`}
         >
-          <GitHubIcon className="mx-0" /> {user.github}
+          <GitHubIcon className="mx-0" /> {socials.github}
         </a>
       </li>
     )}
-    {user?.x && (
+    {socials?.x && (
       <li>
         <a
           target="_blank"
           className="flex items-center gap-2 underline"
-          href={`https://x.com/${user.x}`}
+          href={`https://x.com/${socials.x}`}
         >
-          <XIcon className="mx-0 h-4 w-4 fill-current" /> {user.x}
+          <XIcon className="mx-0 h-4 w-4 fill-current" /> {socials.x}
         </a>
       </li>
     )}
-    {user?.threads && (
+    {socials?.threads && (
       <li>
         <a
           target="_blank"
           className="flex items-center gap-2 underline"
-          href={`https://threads.net/@${user.threads}`}
+          href={`https://threads.net/@${socials.threads}`}
         >
-          <ThreadsIcon className="mx-0 h-4 w-4 fill-current" /> {user.threads}
+          <ThreadsIcon className="mx-0 h-4 w-4 fill-current" />{" "}
+          {socials.threads}
         </a>
       </li>
     )}
-    {user?.linkedin && (
+    {socials?.linkedin && (
       <li>
         <a
           target="_blank"
           className="flex items-center gap-2 underline"
-          href={`https://www.linkedin.com/in/${user.linkedin}`}
+          href={`https://www.linkedin.com/in/${socials.linkedin}`}
         >
-          <LinkedinIcon className="h-4 w-4 " /> {user.linkedin}
+          <LinkedinIcon className="h-4 w-4 " /> {socials.linkedin}
         </a>
       </li>
     )}
-    {user?.mastodon && (
+    {socials?.mastodon && (
       <li>
         <a
           target="_blank"
           className=" flex items-center gap-2 underline"
-          href={`${user?.mastodon}`}
+          href={`${socials?.mastodon}`}
         >
           <MastodonIcon className="mx-0 h-4 w-4 fill-current" />{" "}
-          {user?.mastodon}
+          {socials?.mastodon}
         </a>
       </li>
     )}

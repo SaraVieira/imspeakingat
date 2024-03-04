@@ -1,14 +1,6 @@
-import { z } from 'zod';
-import {
-  createTRPCRouter,
-  protectedProcedure,
-} from '~/server/api/trpc';
-
-import {
-  type Conference,
-  type Gig,
-  GigType,
-} from '@prisma/client';
+import { type Conference, type Gig, GigType } from "@prisma/client";
+import { z } from "zod";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export type ReturnType = Gig & { Conference: Conference };
 
@@ -33,6 +25,11 @@ export const conferencesRouter = createTRPCRouter({
           dateEnd: true,
           location: true,
           website: true,
+          x: true,
+          threads: true,
+          mastodon: true,
+          github: true,
+          image: true,
         },
         orderBy: {
           name: "asc",
