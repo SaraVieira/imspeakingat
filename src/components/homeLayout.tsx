@@ -45,7 +45,7 @@ export const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </header>
       <SEO />
-      <main className="mx-auto flex flex-grow flex-col items-center justify-center px-6 text-foreground">
+      <main className="mx-auto flex flex-grow flex-col items-center justify-center text-foreground">
         {children}
       </main>
 
