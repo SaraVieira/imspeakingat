@@ -11,8 +11,8 @@ jobs:
       NODE_ENV: test
       NEXTAUTH_SECRET: supersecret
       DISCORD_CLIENT_ID: test
-      GITHUB_CLIENT_ID: test
-      GITHUB_CLIENT_SECRET: test
+      GITHUB_SECRET: test
+      GITHUB_ID: test
       DISCORD_CLIENT_SECRET: test
       NEXT_PUBLIC_GPLACES_KEY: test
       GOOGLE_CLIENT_ID: test

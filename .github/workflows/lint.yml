@@ -14,8 +14,8 @@ jobs:
       NEXTAUTH_SECRET: supersecret
       DISCORD_CLIENT_ID: test
       DISCORD_CLIENT_SECRET: test
-      GITHUB_CLIENT_ID: test
-      GITHUB_CLIENT_SECRET: test
+      GITHUB_SECRET: test
+      GITHUB_ID: test
       NEXTAUTH_URL: http://localhost:3000
       NEXT_PUBLIC_GPLACES_KEY: test
       GOOGLE_CLIENT_ID: test
