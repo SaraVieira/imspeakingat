@@ -9,7 +9,7 @@ interface SocialLinksProps {
     github: string | null;
     x: string | null;
     threads: string | null;
-    linkedin: string | null;
+    linkedin?: string | null;
     mastodon: string | null;
   };
 }
