@@ -80,7 +80,7 @@ const Event = ({
         <h2 className="mb-4 mt-8 block text-xl font-semibold">Speakers</h2>
         <ul className="flex -space-x-8">
           {conference?.speakers?.map((speaker) => (
-            <li>
+            <li key={speaker.id}>
               <Tooltip>
                 <TooltipContent>{speaker.username}</TooltipContent>
                 <TooltipTrigger>

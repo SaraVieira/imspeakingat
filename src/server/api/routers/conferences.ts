@@ -49,7 +49,7 @@ export const conferencesRouter = createTRPCRouter({
         ...(input?.limit && { take: input?.limit }),
       });
     }),
-  getSearch: protectedProcedure.query(({ input, ctx }) => {
+  getSearch: protectedProcedure.query(({ ctx }) => {
     return ctx.db.conference.findMany({
       orderBy: {
         name: "asc",
