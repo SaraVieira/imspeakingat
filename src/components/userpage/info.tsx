@@ -1,8 +1,8 @@
 import { type User } from "@prisma/client";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import ReactCountryFlag from "react-country-flag";
-import { SocialLinks } from "./links";
 import { Globe } from "lucide-react";
+import ReactCountryFlag from "react-country-flag";
+import { SocialLinks } from "../links";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export const ProfileInfo = ({ user }: { user: User }) => {
   return (
@@ -34,7 +34,7 @@ export const ProfileInfo = ({ user }: { user: User }) => {
             <Globe className="mx-0 w-4" /> Website
           </a>
         </div>
-        <SocialLinks user={user} />
+        <SocialLinks socials={user} />
       </div>
     </>
   );

@@ -1,5 +1,10 @@
+import { useState } from "react";
+
 import { MoreVertical } from "lucide-react";
-import type { ConferenceProps } from ".";
+import Link from "next/link";
+import { api } from "~/utils/api";
+
+import { AddEngagementForm } from "../addEngagement";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -14,11 +19,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { AddEngagementForm } from "../addEngagement";
 import { toast } from "../ui/use-toast";
+import type { ConferenceProps } from "./";
 import { GoogleCalendarItem } from "./googleCalendarItem";
-import { useState } from "react";
-import { api } from "~/utils/api";
 
 export const ConferenceMenu = (
   props: ConferenceProps & { onDelete: () => void },
@@ -59,6 +62,9 @@ export const ConferenceMenu = (
             </div>
           </SheetContent>
         </Sheet>
+        <DropdownMenuItem>
+          <Link href={`/events/${conference.slug}`}>Event details</Link>
+        </DropdownMenuItem>
         <GoogleCalendarItem conference={conference} />
         <DropdownMenuItem
           className="text-destructive"

@@ -5,6 +5,15 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 export type ReturnType = Gig & { Conference: Conference };
 
 export const conferencesRouter = createTRPCRouter({
+  getBySlug: protectedProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(({ input, ctx }) => {
+      return ctx.db.conference.findUnique({
+        where: {
+          slug: input.slug,
+        },
+      });
+    }),
   get: protectedProcedure
     .input(z.object({ limit: z.number().optional() }).optional())
     .query(({ input, ctx }) => {
@@ -16,6 +25,11 @@ export const conferencesRouter = createTRPCRouter({
           dateEnd: true,
           location: true,
           website: true,
+          x: true,
+          threads: true,
+          mastodon: true,
+          github: true,
+          image: true,
         },
         orderBy: {
           name: "asc",
