@@ -23,7 +23,7 @@ export const ConferenceCombobox = ({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(defaultValue ?? "");
 
-  const { data: conferences } = api.conferences?.get.useQuery();
+  const { data: conferences } = api.conferences?.getSearch.useQuery();
 
   const handleSelect = (value: string) => {
     const selectedConf = conferences?.find((conf) => conf.id === value);

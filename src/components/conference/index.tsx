@@ -1,9 +1,7 @@
 import { type Conference, type GigType } from "@prisma/client";
-import { TooltipContent } from "@radix-ui/react-tooltip";
-import ReactCountryFlag from "react-country-flag";
 import { cn } from "~/lib/utils";
 import { Card, CardHeader } from "../ui/card";
-import { Tooltip, TooltipTrigger } from "../ui/tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
 import ConferenceDates from "./ConferenceDates";
 import ConferenceFlag from "./ConferenceFlag";
 import { ConferenceMenu } from "./ConferenceMenu";

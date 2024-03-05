@@ -2,8 +2,7 @@ import ReactCountryFlag from "react-country-flag";
 import { Card, CardHeader } from "../ui/card";
 import { format } from "date-fns";
 import { type Conference, type GigType } from "@prisma/client";
-import { Tooltip, TooltipTrigger } from "../ui/tooltip";
-import { TooltipContent } from "@radix-ui/react-tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
 
 export const ProfileEvent = ({
   type,

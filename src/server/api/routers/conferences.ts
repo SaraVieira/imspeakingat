@@ -1,36 +1,43 @@
 import { type Conference, type Gig, GigType } from "@prisma/client";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { omit } from "lodash-es";
 
 export type ReturnType = Gig & { Conference: Conference };
 
 export const conferencesRouter = createTRPCRouter({
   getBySlug: protectedProcedure
     .input(z.object({ slug: z.string() }))
-    .query(({ input, ctx }) => {
-      return ctx.db.conference.findUnique({
+    .query(async ({ input, ctx }) => {
+      const conf = await ctx.db.conference.findUnique({
         where: {
           slug: input.slug,
         },
+        include: {
+          gigs: {
+            include: {
+              createdBy: {
+                select: {
+                  id: true,
+                  image: true,
+                  username: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
       });
+
+      return {
+        ...omit(conf, ["gigs"]),
+        speakers: conf?.gigs.map((c) => c.createdBy),
+      };
     }),
   get: protectedProcedure
     .input(z.object({ limit: z.number().optional() }).optional())
     .query(({ input, ctx }) => {
       return ctx.db.conference.findMany({
-        select: {
-          id: true,
-          name: true,
-          dateStart: true,
-          dateEnd: true,
-          location: true,
-          website: true,
-          x: true,
-          threads: true,
-          mastodon: true,
-          github: true,
-          image: true,
-        },
         orderBy: {
           name: "asc",
         },
@@ -42,6 +49,22 @@ export const conferencesRouter = createTRPCRouter({
         ...(input?.limit && { take: input?.limit }),
       });
     }),
+  getSearch: protectedProcedure.query(({ input, ctx }) => {
+    return ctx.db.conference.findMany({
+      orderBy: {
+        name: "asc",
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+      where: {
+        dateStart: {
+          gte: new Date(),
+        },
+      },
+    });
+  }),
 
   create: protectedProcedure
     .input(
