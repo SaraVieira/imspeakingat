@@ -26,13 +26,15 @@ export const ProfileInfo = ({ user }: { user: User }) => {
             )}{" "}
             {user?.locationName}
           </div>
-          <a
-            target="_blank"
-            className=" mt-4 flex items-center gap-2 underline"
-            href={`${user?.website}`}
-          >
-            <Globe className="mx-0 w-4" /> Website
-          </a>
+          {user?.website ? (
+            <a
+              target="_blank"
+              className=" mt-4 flex items-center gap-2 underline"
+              href={`${user?.website}`}
+            >
+              <Globe className="mx-0 w-4" /> Website
+            </a>
+          ) : null}
         </div>
         <SocialLinks socials={user} />
       </div>
