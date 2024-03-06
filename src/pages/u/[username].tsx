@@ -26,7 +26,13 @@ const Profile = ({
   url: string;
 }) => {
   const { setTheme, theme } = useTheme();
-
+  if (!data.id) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center text-2xl font-bold">
+        User does not exist
+      </div>
+    );
+  }
   return (
     <div className="flex min-h-screen flex-col">
       <SEO isProfile>
