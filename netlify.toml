@@ -9,3 +9,6 @@ included_files = [
 for = "/_next/*"
 [headers.values]
 Access-Control-Allow-Origin = "*"
+for = "/site.webmanifest"
+[headers.values]
+Access-Control-Allow-Origin = "*"
