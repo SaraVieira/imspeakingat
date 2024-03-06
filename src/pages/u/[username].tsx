@@ -76,7 +76,7 @@ const Profile = ({
           <span className="text-sm text-muted-foreground">
             Created using{" "}
             <a
-              href="https:// imspeaking.at"
+              href="https://imspeaking.at"
               className="underline"
               target="_blank"
             >
