@@ -6,6 +6,6 @@ included_files = [
 ]
 
 [[headers]]
-for = "/*"
+for = "/_next/*"
 [headers.values]
 Access-Control-Allow-Origin = "*"
