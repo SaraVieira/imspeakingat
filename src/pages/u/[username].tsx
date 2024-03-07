@@ -35,7 +35,12 @@ const Profile = ({
   }
   return (
     <div className="flex min-h-screen flex-col">
-      <SEO isProfile>
+      <SEO
+        isProfile
+        title={`${data.username} - imspeaking.at`}
+        description={`Check out ${data.username} next events.`}
+        url={`https://${data.username}.imspeaking.at`}
+      >
         <meta
           property="twitter:image"
           content={`${url}/api/og/profile?username=${data.username}&image=${data.image}&events=${data.gigs.length}`}

@@ -1,5 +1,4 @@
 import { AlertCircle } from "lucide-react";
-import { GetServerSidePropsContext } from "next";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
