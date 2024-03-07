@@ -1,4 +1,5 @@
 import { AlertCircle } from "lucide-react";
+import { GetServerSidePropsContext } from "next";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -7,6 +8,7 @@ import { DiscordIcon } from "~/components/icons/discord";
 import { GitHubIcon } from "~/components/icons/github";
 import { GoogleIcon } from "~/components/icons/google";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
+import { env } from "~/env";
 import { cn } from "~/lib/utils";
 
 const errors = {
@@ -20,34 +22,42 @@ const errors = {
   Default: "Something went wrong",
 };
 
-function SignIn() {
-  const signins = [
-    {
-      label: "Discord",
-      name: "discord",
-      Icon: DiscordIcon,
-      classes: "bg-[#5865F2] hover:bg-[#4a54cb]",
-    },
-    {
-      label: "Google",
-      name: "google",
-      Icon: GoogleIcon,
-      classes: "bg-red-600 hover:bg-red-700",
-    },
-    {
-      label: "GitHub",
-      name: "github",
-      classes: "bg-gray-900 hover:bg-gray-800",
-      Icon: GitHubIcon,
-    },
-  ];
+const signins = {
+  discord: {
+    label: "Discord",
+    name: "discord",
+    Icon: DiscordIcon,
+    classes: "bg-[#5865F2] hover:bg-[#4a54cb]",
+  },
+  google: {
+    label: "Google",
+    name: "google",
+    Icon: GoogleIcon,
+    classes: "bg-red-600 hover:bg-red-700",
+  },
+
+  github: {
+    label: "GitHub",
+    name: "github",
+    classes: "bg-gray-900 hover:bg-gray-800",
+    Icon: GitHubIcon,
+  },
+};
+
+function SignIn({
+  availableSignin,
+}: {
+  availableSignin: (keyof typeof signins)[];
+}) {
   const { data } = useSession();
   const { push, query } = useRouter();
+
   useEffect(() => {
     if (data?.user) {
       push("/app");
     }
   });
+
   return (
     <HomeLayout>
       <section className="flex flex-col items-center">
@@ -66,21 +76,24 @@ function SignIn() {
           </Alert>
         ) : null}
         <div className="space-y-3 sm:w-[400px]">
-          {signins.map(({ Icon, name, label, classes }, index) => (
-            <button
-              key={index}
-              onClick={() => signIn(name, { callbackUrl: "/app" })}
-              className={cn(
-                "btn relative flex w-full items-center px-0 text-white",
-                classes,
-              )}
-            >
-              <Icon />
-              <span className="-ml-16 flex-auto pl-16 pr-8">
-                Continue with {label}
-              </span>
-            </button>
-          ))}
+          {availableSignin.map((a, index) => {
+            const { Icon, name, label, classes } = signins[a];
+            return (
+              <button
+                key={index}
+                onClick={() => signIn(name, { callbackUrl: "/app" })}
+                className={cn(
+                  "btn relative flex w-full items-center px-0 text-white",
+                  classes,
+                )}
+              >
+                <Icon />
+                <span className="-ml-16 flex-auto pl-16 pr-8">
+                  Continue with {label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </section>
     </HomeLayout>
@@ -88,3 +101,14 @@ function SignIn() {
 }
 
 export default SignIn;
+export async function getServerSideProps() {
+  return {
+    props: {
+      availableSignin: [
+        "github",
+        "discord",
+        env.NODE_ENV === "development" ? "google" : "",
+      ].filter((a) => a),
+    },
+  };
+}
