@@ -27,10 +27,19 @@ export default function Home() {
           <div className="absolute top-1/2 mx-auto -translate-y-1/2">
             <img src={"/browser1.png"} width="768" alt="Hero" />
             <div className="absolute left-3 top-0 m-auto h-[430px] w-[727px] max-w-[100vw] overflow-hidden sm:left-[19px]">
-              <ImageComparison
-                firstImageUrl={"./1.png"}
-                secondImageUrl={"./2.png"}
-              />
+              <div className="hidden md:block">
+                <ImageComparison
+                  firstImageUrl={"./1.png"}
+                  secondImageUrl={"./2.png"}
+                />
+              </div>
+              <div className="block md:hidden">
+                <img
+                  className="box-border h-auto max-h-full w-full object-cover object-center"
+                  src={"./3.png"}
+                  alt="Dashboard page"
+                />
+              </div>
             </div>
           </div>
         </div>
