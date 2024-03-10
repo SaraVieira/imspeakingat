@@ -26,6 +26,7 @@ const Event = ({
   // ssrConference: { image: string };
 }) => {
   const { data: conference } = api.conferences.getBySlug.useQuery({ slug });
+  const { setTheme, theme } = useTheme();
 
   if (!conference) {
     return (
@@ -34,7 +35,6 @@ const Event = ({
       </div>
     );
   }
-  const { setTheme, theme } = useTheme();
   return (
     <>
       {/* <SEO isProfile>
